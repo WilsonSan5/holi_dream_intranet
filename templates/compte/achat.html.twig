@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}User
+{% endblock %}
+
+{% block body %}
+	{{dump(user)}}
+
+	<h1>Mes Achats</h1>
+
+
+	<a href="{{ path('app_compte') }}">Retour</a>
+
+
+	{{ include('user/_delete_form.html.twig') }}
+{% endblock %}

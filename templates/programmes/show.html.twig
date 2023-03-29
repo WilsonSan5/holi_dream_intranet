@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Produit{% endblock %}
+
+{% block body %}
+    <h1>{{produit.title}}</h1>
+    <h2> {{produit.introduction}}</h2>
+    <p>{{produit.description}}</p>
+    <p> {{produit.descriptionProgramme}} </p>
+
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Nombre de jours</th>
+                <td>{{ produit.nbrJour }}</td>
+            </tr>
+            <tr>
+                <th>Nombre de nuits</th>
+                <td>{{ produit.nbrNuit }}</td>
+            </tr>
+            <tr>
+                <th>Prix</th>
+                <td> <b>{{ produit.prixDefaut }}</b></td>
+            </tr>
+        </tbody>
+    </table>
+
+    
+    <a href="{{ path('app_programmes_stripe', {'id': produit.id}) }}">Réserver</a>
+
+    <a href="{{ path('app_programmes') }}">Retour</a>
+{% endblock %}
