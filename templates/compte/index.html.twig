@@ -4,15 +4,14 @@
 {% endblock %}
 
 {% block body %}
-	{{dump(user)}}
 
-	<h1>Compte Index</h1>
 
-	<a href="{{ path('app_home') }}">Retour</a>
+	<h1>{{user.nom}} {{user.prenom}}</h1>
+
+	
 
     <a href="{{ path('app_compte_achat') }}"><button>Mes achats</button></a>
 	<a href="{{ path('app_compte_utilisateur') }}"><button>Paramètre du compte</button></a>
-
-	{{ include('user/_delete_form.html.twig') }}
+<a href="{{ path('app_home') }}">Retour</a>
 {% endblock %}
 

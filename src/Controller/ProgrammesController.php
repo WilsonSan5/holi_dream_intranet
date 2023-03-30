@@ -4,6 +4,7 @@ namespace App\Controller;
 
 
 use App\Repository\ProduitRepository;
+use App\Repository\PlanningRepository;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -11,14 +12,19 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Produit;
 
 use App\Repository\AchatRepository;
-use App\Entity\Achat;
 use Symfony\Component\Security\Core\User\UserInterface;
 
+use App\Entity\Achat;
+use App\Form\UserPlanningType;
+
+use Symfony\Component\HttpFoundation\Request;
 
 
+
+#[Route('/programmes')]
 class ProgrammesController extends AbstractController
 {
-    #[Route('/programmes', name: 'app_programmes')]
+    #[Route('/', name: 'app_programmes')]
     public function index(ProduitRepository $produitRepository): Response
     {
         return $this->render('programmes/index.html.twig', [
@@ -27,20 +33,30 @@ class ProgrammesController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_programmes_show')]
-    public function show( Produit $produit): Response
+    #[Route('/{id}', name: 'app_programmes_show', methods: ['GET'])]
+    public function show(Produit $produit,  Request $request, ProduitRepository $produitRepository): Response
     {
+
         return $this->render('programmes/show.html.twig', [
             'produit' => $produit,
+
         ]);
     }
 
     #[Route('/{id}/stripe', name: 'app_programmes_stripe')]
-    public function buy( Produit $produit, AchatRepository $achatRepository, UserInterface $userinterface): Response
-    {   
-        $user = $userinterface;
+    public function buy(Produit $produit, AchatRepository $achatRepository, UserInterface $userinterface, PlanningRepository $planningRepository): Response
+    {
+        $planning = $_GET['planning'];
+        $planning = $planningRepository->findOneBy(['id' => $planning]);
+
+        dump($planning);
+        // Comment réupérer le planning sous forme d'objet ?!
+
         $achat = new Achat;
-        $achat->setUser($user);
+
+        $achat->setUser($userinterface);
+        $achat->setProduit($produit);
+        $achat->setPlanning($planning);
 
         $achatRepository->save($achat, true);
 
@@ -48,5 +64,7 @@ class ProgrammesController extends AbstractController
             'produit' => $produit,
         ]);
     }
+
+
 
 }

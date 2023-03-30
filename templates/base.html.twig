@@ -25,56 +25,66 @@
 	<body>
 		<nav class="navbar navbar-expand-lg bg-body-primary">
 			<div class="container-fluid">
-				<a class="navbar-brand" href="#">Holi Dream (Admin)</a>
+				{% if is_granted('ROLE_ADMIN') %}
+					<a class="navbar-brand" href="{{path('app_home')}}">Holi Dream (Admin)</a>
+				{% else %}
+					<a class="navbar-brand" href="{{path('app_home')}}">Holi Dream
+					</a>
+				{% endif %}
 				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
 					<span class="navbar-toggler-icon"></span>
 				</button>
 				<div class="collapse navbar-collapse" id="navbarNav">
 					<ul class="navbar-nav">
-						<li class="nav-item">
-							<a class="nav-link" aria-current="page" href="#">Home</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="{{path('app_programmes')}}">Liste des programmes</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="{{path('app_about')}}">Qui-sommes-nous</a>
-						</li>
+						{% if is_granted('ROLE_ADMIN') %}
+							<li class="nav-item">
+								<a class="nav-link" href="{{path('app_planning_index')}}">Plannings</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="{{path('app_produit_index')}}">Produits</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="{{path('app_user_index')}}">Utilisateurs</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="{{path('app_achat_index')}}"> Achats</a>
+							</li>
 
-						<li class="nav-item">
-							<a class="nav-link" href="{{path('app_planning_index')}}">Plannings</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="{{path('app_produit_index')}}">Produits</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="{{path('app_user_index')}}">Utilisateur</a>
-						</li>
-
-						{% if is_granted('ROLE_USER') %}
-							{# <li class="nav-item">
+							<li class="nav-item">
 								<a class="nav-link" href="{{path('app_compte')}}">Compte</a>
-							</li> #}
-
+							</li>
 							<li class="nav-item">
 								<a class="nav-link" href="{{path('app_logout')}}">Déconnexion</a>
-							</li>
 
-						{% else %}
-							<li class="nav-item">
-								<a class="nav-link" href="{{path('app_login')}}">Connexion</a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link" href="{{path('app_register')}}">Inscription</a>
-							</li>
-						{% endif %}
-					</ul>
+							{% elseif is_granted('ROLE_USER') %}
+								<li class="nav-item">
+									<a class="nav-link" href="{{path('app_programmes')}}">Tous les programmes</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" href="{{path('app_compte')}}">Mon compte</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" href="{{path('app_logout')}}">Déconnexion</a>
+								</li>
+							{% else %}
+								<li class="nav-item">
+									<a class="nav-link" href="{{path('app_programmes')}}">Tous les programmes</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" href="{{path('app_login')}}">Connexion</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" href="{{path('app_register')}}">Inscription</a>
+								</li>
+							{% endif %}
+						</ul>
+					</div>
 				</div>
-			</div>
-		</nav>
+			</nav>
 
-		<div class='container'> {% block body %}{% endblock %}
-			</div>
+			<div class='container'> {% block body %}{% endblock %}
+				</div>
+			</body>
 		</body>
 	</html>
 </body></html>

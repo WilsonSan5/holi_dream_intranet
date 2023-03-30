@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello ProgrammesController!
+{% block title %}Tous les voyages
 {% endblock %}
 
 {% block body %}
@@ -18,9 +18,9 @@
 	</style>
 
 	<div class="example-wrapper">
-		<h1>{{controller_name}}</h1>
+		<h1>Tous les voyages</h1>
 
-		<div class='d-flex'>
+		<div class='d-flex flex-wrap'>
 			{% for produit in produits %}
 
 				<div class="card" style="width: 18rem;">

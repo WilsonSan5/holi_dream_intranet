@@ -3,10 +3,11 @@
 {% block title %}Produit{% endblock %}
 
 {% block body %}
+
     <h1>{{produit.title}}</h1>
     <h2> {{produit.introduction}}</h2>
     <p>{{produit.description}}</p>
-    <p> {{produit.descriptionProgramme}} </p>
+    <p> <b>Au programme :</b> <br> {{produit.descriptionProgramme}} </p>
 
 
     <table class="table">
@@ -21,13 +22,25 @@
             </tr>
             <tr>
                 <th>Prix</th>
-                <td> <b>{{ produit.prixDefaut }}</b></td>
+                <td> <b>{{ produit.prixDefaut }} €</b></td>
             </tr>
         </tbody>
     </table>
 
-    
-    <a href="{{ path('app_programmes_stripe', {'id': produit.id}) }}">Réserver</a>
+    {% if produit.planning|length > 0 %}
+    <form method="GET" action="{{ path('app_programmes_stripe', {'id': produit.id}) }}">
+        <select name="planning">
+        {% for planning in produit.planning %}
+            <option value="{{planning.id}}">{{planning.DateDepart|date("d/m/Y") }} - {{planning.DateFin|date("d/m/Y")}}</option>
+        {% endfor %}
+        </select>
+
+        <input type="submit" value="Réserver">
+    </form>
+    {% else %}
+    <p class ='alert'>Aucun planning disponible</p>
+    {% endif %}
+
 
     <a href="{{ path('app_programmes') }}">Retour</a>
 {% endblock %}

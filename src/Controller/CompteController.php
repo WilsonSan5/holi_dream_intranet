@@ -14,13 +14,13 @@ use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 
-
+#[Route('/compte')]
 class CompteController extends AbstractController
 {
 
     // Page d'accueil de compte (Elle va contenir 2 boutons : Achats et Commane)
 
-    #[Route('/compte', name: 'app_compte')]
+    #[Route('/', name: 'app_compte')]
     public function index(): Response
     {
         return $this->render('compte/index.html.twig', [
@@ -28,15 +28,16 @@ class CompteController extends AbstractController
         ]);
     }
 
-    #[Route('/compte/achat', name: 'app_compte_achat')]
-    public function achat(): Response
-    {
+    #[Route('/achat', name: 'app_compte_achat')]
+    public function achat(UserInterface $userInterface): Response
+    {   
         return $this->render('compte/achat.html.twig', [
-            'user' => $this->getUser()
+            'user' => $this->getUser(),
+        
         ]);
     }
 
-    #[Route('/compte/utilisateur', name: 'app_compte_utilisateur')]
+    #[Route('/utilisateur', name: 'app_compte_utilisateur')]
     public function show(): Response
     {
         return $this->render('compte/show.html.twig', [
@@ -45,7 +46,7 @@ class CompteController extends AbstractController
         ]);
     }
 
-    #[Route('/compte/utilisateur/edit', name: 'app_compte_edit', methods: ['GET', 'POST'])]
+    #[Route('/utilisateur/edit', name: 'app_compte_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, UserInterface $userInterface, UserRepository $userRepository): Response
     {
         $user = $this->getUser();

@@ -11,7 +11,7 @@ use App\Entity\Produit;
 
 class HomeController extends AbstractController
 {
-    #[Route('/home', name: 'app_home')]
+    #[Route('/', name: 'app_home')]
     public function index(ProduitRepository $produitRepository): Response
     {
         return $this->render('home/index.html.twig', [

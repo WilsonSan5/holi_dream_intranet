@@ -45,6 +45,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->achat = new ArrayCollection();
     }
 
+    public function __toString(): string
+    {
+        return $this->email;
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -85,7 +90,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     public function setRoles(array $roles): self
-    {
+    {   
         $this->roles = $roles;
 
         return $this;

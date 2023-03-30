@@ -1,42 +1,77 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}User{% endblock %}
+{% block title %}User
+{% endblock %}
 
 {% block body %}
-    <h1>User</h1>
+	<h1>{{user.nom}} {{user.prenom}}</h1>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ user.id }}</td>
-            </tr>
-            <tr>
-                <th>Email</th>
-                <td>{{ user.email }}</td>
-            </tr>
-            <tr>
-                <th>Roles</th>
-                <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
-            </tr>
-            <tr>
-                <th>Password</th>
-                <td>{{ user.password }}</td>
-            </tr>
-            <tr>
-                <th>Nom</th>
-                <td>{{ user.nom }}</td>
-            </tr>
-            <tr>
-                <th>Prenom</th>
-                <td>{{ user.prenom }}</td>
-            </tr>
-        </tbody>
-    </table>
+	<table class="table">
+		<tbody>
+			<tr>
+				<th>Id</th>
+				<td>{{ user.id }}</td>
+			</tr>
+			<tr>
+				<th>Email</th>
+				<td>{{ user.email }}</td>
+			</tr>
+			<tr>
+				<th>Roles</th>
+				<td>{{ user.roles ? user.roles|json_encode : '' }}</td>
+			</tr>
+			<tr>
+				<th>Password</th>
+				<td>{{ user.password }}</td>
+			</tr>
+			<tr>
+				<th>Nom</th>
+				<td>{{ user.nom }}</td>
+			</tr>
+			<tr>
+				<th>Prénom</th>
+				<td>{{ user.prenom }}</td>
+			</tr>
+		</tbody>
+	</table>
 
-    <a href="{{ path('app_user_index') }}">back to list</a>
+    <h2> Achats</h2>
 
-    <a href="{{ path('app_user_edit', {'id': user.id}) }}">edit</a>
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Id</th>
+                <th>produit</th>
+                <th>Date de départ</th>
+                <th>Date de fin</th>
+				<th>Prix</th>
+				<th>actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for achat in user.achat %}
+				<tr>
+					<td>{{ achat.id }}</td>
+                    <td>{{ achat.produit }}</td>
+                    <td>{{ achat.planning.dateDepart | date("d/m/Y") }}</td>
+                    <td>{{ achat.planning.dateFin | date("d/m/Y") }}</td>
+					<td>{{ achat.prix }}</td>
+					<td>
+						<a href="{{ path('app_achat_show', {'id': achat.id}) }}">show</a>
+						<a href="{{ path('app_achat_edit', {'id': achat.id}) }}">edit</a>
+					</td>
+				</tr>
+			{% else %}
+				<tr>
+					<td colspan="3">no records found</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
 
-    {{ include('user/_delete_form.html.twig') }}
+	<a href="{{ path('app_user_index') }}">back to list</a>
+
+	<a href="{{ path('app_user_edit', {'id': user.id}) }}">edit</a>
+
+	{{ include('user/_delete_form.html.twig') }}
 {% endblock %}

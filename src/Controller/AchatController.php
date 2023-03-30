@@ -9,8 +9,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 #[Route('/achat')]
+
+#[IsGranted('ROLE_ADMIN')]
 class AchatController extends AbstractController
 {
     #[Route('/', name: 'app_achat_index', methods: ['GET'])]
@@ -27,6 +30,7 @@ class AchatController extends AbstractController
         $achat = new Achat();
         $form = $this->createForm(AchatType::class, $achat);
         $form->handleRequest($request);
+        
 
         if ($form->isSubmitted() && $form->isValid()) {
             $achatRepository->save($achat, true);
