@@ -28,7 +28,7 @@
     </table>
 
     {% if produit.planning|length > 0 %}
-    <form method="GET" action="{{ path('app_programmes_stripe', {'id': produit.id}) }}">
+    <form method="GET" action="{{ path('app_programmes_payment', {'id': produit.id}) }}">
         <select name="planning">
         {% for planning in produit.planning %}
             <option value="{{planning.id}}">{{planning.DateDepart|date("d/m/Y") }} - {{planning.DateFin|date("d/m/Y")}}</option>

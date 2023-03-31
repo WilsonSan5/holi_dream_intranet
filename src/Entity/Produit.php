@@ -43,6 +43,9 @@ class Produit
     #[ORM\Column(type: Types::TEXT)]
     private ?string $descriptionProgramme = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $image = null;
+
     public function __construct()
     {
         $this->planning = new ArrayCollection();
@@ -199,6 +202,18 @@ class Produit
     public function setDescriptionProgramme(string $descriptionProgramme): self
     {
         $this->descriptionProgramme = $descriptionProgramme;
+
+        return $this;
+    }
+
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function setImage(?string $image): self
+    {
+        $this->image = $image;
 
         return $this;
     }

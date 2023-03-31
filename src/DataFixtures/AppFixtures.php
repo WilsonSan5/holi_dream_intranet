@@ -27,10 +27,10 @@ class AppFixtures extends Fixture
             $product->setPrixDefaut(mt_rand(100, 5000));
             $product->setDescriptionProgramme($faker->sentence(5, true));
 
-            for ($i = 0; $i < mt_rand(0, 5); $i++) {
+            for ($k = 1; $k < mt_rand(0, 6); $k++) {
                 $planning = new Planning();
-                $planning->setDateDepart($faker->dateTime);
-                $planning->setDateFin($faker->dateTime);
+                $planning->setDateDepart($faker->dateTimeBetween('0 week', '+5 week'));
+                $planning->setDateFin($faker->dateTimeBetween($planning->getDateDepart(), '+8 week'));
                 $planning->setPrix(mt_rand(100, 5000));
                 $planning->setProduit($product);
                 
