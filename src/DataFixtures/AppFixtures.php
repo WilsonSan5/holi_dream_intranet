@@ -19,19 +19,20 @@ class AppFixtures extends Fixture
 
         for ($i = 0; $i < 10; $i++) {
             $product = new Produit();
-            $product->setTitle($faker->sentence(3, true));
+            $product->setTitle('Destination : '. $faker->country);
             $product->setIntroduction($faker->sentence(6, true));
-            $product->setDescription($faker->sentence(100, true));
+            $product->setDescription($faker->sentence(60, true));
             $product->setNbrJour(mt_rand(10, 100));
-            $product->setNbrNuit(mt_rand(10, 100));
-            $product->setPrixDefaut(mt_rand(100, 5000));
+            $product->setNbrNuit($product->getNbrJour());
+            $product->setPrixDefaut(mt_rand(100, 3000));
             $product->setDescriptionProgramme($faker->sentence(5, true));
+            $product->setImage($faker->image('/images',640,480, true));
 
             for ($k = 1; $k < mt_rand(0, 6); $k++) {
                 $planning = new Planning();
                 $planning->setDateDepart($faker->dateTimeBetween('0 week', '+5 week'));
                 $planning->setDateFin($faker->dateTimeBetween($planning->getDateDepart(), '+8 week'));
-                $planning->setPrix(mt_rand(100, 5000));
+                $planning->setPrix(mt_rand(100, 3000));
                 $planning->setProduit($product);
                 
                 $manager->persist($planning);
@@ -39,8 +40,6 @@ class AppFixtures extends Fixture
 
             $manager->persist($product);
         }
-
-
         $manager->flush();
     }
 }

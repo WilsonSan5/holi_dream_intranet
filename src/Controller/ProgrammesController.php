@@ -25,12 +25,9 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Serializer\SerializerInterface;
 
 
-
-
-#[Route('/programmes')]
 class ProgrammesController extends AbstractController
 {
-    #[Route('/', name: 'app_programmes')]
+    #[Route('/programmes', name: 'app_programmes')]
     public function index(ProduitRepository $produitRepository): Response
     {
         return $this->render('programmes/index.html.twig', [
@@ -39,18 +36,35 @@ class ProgrammesController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/payment', name: 'app_programmes_payment', methods: ['GET'])]
-    public function buy(Produit $produit, ProduitRepository $produitRepository): Response
+    
+  
+    #[Route('/programmes/{id}', name: 'app_programmes_show', methods: ['GET'])]
+    public function show(Produit $produit, Request $request, ProduitRepository $produitRepository): Response
     {
+
+        return $this->render('programmes/show.html.twig', [
+            'produit' => $produit,
+
+        ]);
+    }
+
+    #[Route('/programmes/{id}/payment', name: 'app_programmes_payment', methods: ['GET'])]
+    public function buy(Produit $produit, UserInterface $userinterface, PlanningRepository $planningRepository): Response
+    {   
+        $planning = $_GET['planning'];
+        $planning = $planningRepository->findOneBy(['id'=>$planning]);
 
         return $this->render('programmes/payment.html.twig', [   
             'produit' => $produit,
+            'planning' => $planning,
+            'user' => $userinterface
         ]);
     }
 
     #[Route('/intentPayment', name: 'app_paiement_stripe')]
     public function intentStripe(SerializerInterface $serializerInterface): JsonResponse
     {
+        dump('intentpayment');
         //Insérer la clé secrète pour relier votre clé public à la clé secret
         Stripe::setApiKey('sk_test_51Mf1j1FufBPCUONNJMWBzxMnyfHa5NdSycSU0Tclj0zPTktHfwIPaaEP4R3SwfBCgtpuE6o4aIpsPgu0F1vMOH6y00kbKWYWQF');
 
@@ -90,18 +104,7 @@ class ProgrammesController extends AbstractController
         return $this->json([], Response::HTTP_NOT_FOUND);
     }
 
-    #[Route('/{id}', name: 'app_programmes_show', methods: ['GET'])]
-    public function show(Produit $produit, Request $request, ProduitRepository $produitRepository): Response
-    {
-
-        return $this->render('programmes/show.html.twig', [
-            'produit' => $produit,
-
-        ]);
-    }
-
-
-    #[Route('/{id}/confirmation', name: 'app_programmes_confirmation')]
+    #[Route('programmes/{id}/confirmation', name: 'app_programmes_confirmation')]
     public function confirm(Produit $produit, AchatRepository $achatRepository, UserInterface $userinterface, PlanningRepository $planningRepository): Response
     {
         $planning = $_GET['planning'];
@@ -119,7 +122,4 @@ class ProgrammesController extends AbstractController
             'produit' => $produit,
         ]);
     }
-
-
-
 }

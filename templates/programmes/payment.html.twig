@@ -11,20 +11,42 @@
 	<table class="table">
 		<tbody>
 			<tr>
-				<th>Nombre de jours</th>
-				<td>{{ produit.nbrJour }}</td>
+				<th>Utilisateur</th>
+				<td>
+					<span id='nomUser'>{{user.nom}}</span>
+					<span id='prenomUser'>{{user.prenom}}
+					</span>
+				</td>
 			</tr>
 			<tr>
-				<th>Nombre de nuits</th>
-				<td>{{ produit.nbrNuit }}</td>
+				<th>Email</th>
+				<td>
+					{{user.email}}</td>
+			</tr>
+			<tr>
+				<th>Planning</th>
+				<td>{{ planning.DateDepart|date('d/m/Y') }}
+					-
+					{{ planning.DateFin | date('y/m/Y') }}
+				</td>
 			</tr>
 			<tr>
 				<th>Prix</th>
 				<td>
-					<b>{{ produit.prixDefaut }}
+					<b>
+						<span id='prix'>{{ planning.prix }}
+						</span>
 						€</b>
 				</td>
 			</tr>
+			<tr>
+				<th>id_produit</th>
+				<td>
+						<span id='id_produit'>{{ produit.id }}
+						</span>
+				</td>
+			</tr>
+
 		</tbody>
 	</table>
 	<div
@@ -46,6 +68,6 @@
 	</div>
 </div>
 <script type="text/javascript" src="https://js.stripe.com/v3/"></script>
-<script src='stripe/checkout.js'></script>
+<script src='/stripe/checkout.js'></script>
 
 <a href="{{ path('app_programmes') }}">Retour</a>{% endblock %}

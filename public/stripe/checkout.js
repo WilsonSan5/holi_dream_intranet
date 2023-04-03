@@ -1,20 +1,30 @@
 //clé public de stripe mode dev
 console.log('paiement js')
+
 const stripe = Stripe('pk_test_51Mf1j1FufBPCUONNqyxowfyRialcOGzND5Xpi7uudebU7aqvQBKZqVd9WadEzHI0Rmh4eO8IxVOVz1J6kk1CKDC500XpGy6bvU')
 
 
 //Pointer sur le nom de domaine
+
+var id_produit = document.getElementById('id_produit').innerHTML
+
 const originUrl = document.location.origin
 const intentUrl = originUrl + '/intentPayment'
-const successUrl = originUrl +'/confirmation'
+const successUrl = originUrl +'/'+ id_produit +'/confirmation'
+
+console.log('originUrl :'+originUrl)
+console.log(id_produit)
+
 
 var price = document.getElementById('prix').innerText
-var nomUser = document.getElementById("nomUser").innerText
-var prenomUser = document.getElementById("prenomUser").innerText
+var nomUser = document.getElementById('nomUser').innerText
+var prenomUser = document.getElementById('prenomUser').innerText
 
 console.log(price, nomUser, prenomUser)
 
 const items = [{ prix: price, prenom: prenomUser, nom: nomUser }];
+
+console.log(items)
 
 let elements;
 
