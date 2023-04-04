@@ -3,7 +3,16 @@
 {% block title %}Produit
 {% endblock %}
 
+
 {% block body %}
+
+<style>
+	#id_produit, #id_planning{
+		display:none;
+	}
+
+</style>
+
 
 	<h1>{{produit.title}}</h1>
 	<h2>
@@ -13,15 +22,15 @@
 			<tr>
 				<th>Utilisateur</th>
 				<td>
-					<span id='nomUser'>{{user.nom}}</span>
-					<span id='prenomUser'>{{user.prenom}}
+					<span id='nomUser'>{{app.user.nom}}</span>
+					<span id='prenomUser'>{{app.user.prenom}}
 					</span>
 				</td>
 			</tr>
 			<tr>
 				<th>Email</th>
 				<td>
-					{{user.email}}</td>
+					{{app.user.email}}</td>
 			</tr>
 			<tr>
 				<th>Planning</th>
@@ -33,22 +42,13 @@
 			<tr>
 				<th>Prix</th>
 				<td>
-					<b>
-						<span id='prix'>{{ planning.prix }}
-						</span>
-						€</b>
+					<b>	<span id='prix'>{{ planning.prix }}</span>€</b>
 				</td>
 			</tr>
-			<tr>
-				<th>id_produit</th>
-				<td>
-						<span id='id_produit'>{{ produit.id }}
-						</span>
-				</td>
-			</tr>
-
 		</tbody>
 	</table>
+	<span class='hidden' id='id_produit'>{{ produit.id }}</span>
+	<span class='hidden'  id='id_planning'>{{ planning.id }}</span>
 	<div
 		id="paiement">
 		<!-- Display a payment form -->
@@ -67,7 +67,9 @@
 		</form>
 	</div>
 </div>
+
 <script type="text/javascript" src="https://js.stripe.com/v3/"></script>
 <script src='/stripe/checkout.js'></script>
 
-<a href="{{ path('app_programmes') }}">Retour</a>{% endblock %}
+<a href="{{ path('app_programmes') }}">Retour</a>
+{% endblock %}
