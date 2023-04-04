@@ -8,6 +8,7 @@
 	<h1>Mes achats</h1>
 
 
+
   <table class="table">
         <thead>
             <tr>
@@ -21,9 +22,10 @@
         <tbody>
         {% for achat in user.achat %}
             <tr>
+            {{dump(achat.planning)}}
                 <td>{{ achat.id }}</td>
 				<td>{{ achat.produit }}</td>
-                <td>Du {{ achat.planning.dateDepart | date("d/m/Y") }} - au {{achat.planning.DateFin | date("d/m/Y")}}</td>
+                <td>Du {{ achat.planning.DateDepart | date("d/m/Y") }} - au {{achat.planning.DateFin | date("d/m/Y")}}</td>
                 <td>{{ achat.prix }}</td>
                 <td>
                     <a href="{{ path('app_achat_show', {'id': achat.id}) }}">Voir</a>
@@ -35,8 +37,6 @@
                 <td colspan="3">Aucun achat fait</td>
             </tr>
         {% endfor %}
-
-
         </tbody>
     </table>
 

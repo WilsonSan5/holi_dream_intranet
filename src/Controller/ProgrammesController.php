@@ -51,13 +51,13 @@ class ProgrammesController extends AbstractController
     #[Route('/programmes/{id}/payment', name: 'app_programmes_payment', methods: ['GET'])]
     public function buy(Produit $produit, UserInterface $userinterface, PlanningRepository $planningRepository): Response
     {   
-        $planning = $_GET['planning'];
-        $planning = $planningRepository->findOneBy(['id'=>$planning]);
+        $id_planning = $_GET['planning'];
+        $planning = $planningRepository->findOneBy(['id'=>$id_planning]);
 
         return $this->render('programmes/payment.html.twig', [   
             'produit' => $produit,
             'planning' => $planning,
-            'user' => $userinterface
+          
         ]);
     }
 
@@ -104,22 +104,35 @@ class ProgrammesController extends AbstractController
         return $this->json([], Response::HTTP_NOT_FOUND);
     }
 
-    #[Route('programmes/{id}/confirmation', name: 'app_programmes_confirmation')]
-    public function confirm(Produit $produit, AchatRepository $achatRepository, UserInterface $userinterface, PlanningRepository $planningRepository): Response
+    #[Route('/confirmation', name: 'app_programmes_confirmation')]
+    public function confirm(ProduitRepository $produitRepository, AchatRepository $achatRepository, UserInterface $userinterface, PlanningRepository $planningRepository): Response
     {
-        $planning = $_GET['planning'];
-        $planning = $planningRepository->findOneBy(['id' => $planning]);
 
+        $donnees = $_GET['donnees'];
+        $jsonData = json_decode($donnees);
+        $id_produit = $jsonData[0]->id_produit;
+        $id_planning = $jsonData[0]->id_planning;
+
+        dump($donnees);
+
+        $produit =  $produitRepository->findOneBy(['id'=> $id_produit]);
+        $planning = $planningRepository->findOneBy(['id' => $id_planning]);
+        $prix = $planning->getPrix();
         $achat = new Achat;
 
         $achat->setUser($userinterface);
         $achat->setProduit($produit);
         $achat->setPlanning($planning);
+        $achat->setPrix($prix);
 
         $achatRepository->save($achat, true);
 
         return $this->render('programmes/confirmation.html.twig', [
+            // 'produit' => $produit,
+            'donnees'=> $jsonData,
             'produit' => $produit,
+            'planning' => $planning,
+            
         ]);
     }
 }

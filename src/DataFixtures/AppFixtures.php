@@ -26,7 +26,7 @@ class AppFixtures extends Fixture
             $product->setNbrNuit($product->getNbrJour());
             $product->setPrixDefaut(mt_rand(100, 3000));
             $product->setDescriptionProgramme($faker->sentence(5, true));
-            $product->setImage($faker->image('/images',640,480, true));
+            // $product->setImage($faker->image('/images',640,480, true));
 
             for ($k = 1; $k < mt_rand(0, 6); $k++) {
                 $planning = new Planning();
