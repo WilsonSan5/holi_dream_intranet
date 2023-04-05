@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\AchatRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: AchatRepository::class)]
@@ -24,6 +25,15 @@ class Achat
 
     #[ORM\ManyToOne(inversedBy: 'achat')]
     private ?User $user = null;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    private ?\DateTimeInterface $dateAchat = null;
+
+    #[ORM\Column]
+    private ?int $quantite = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $status = null;
 
     public function getId(): ?int
     {
@@ -74,6 +84,42 @@ class Achat
     public function setUser(?User $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function getDateAchat(): ?\DateTimeInterface
+    {
+        return $this->dateAchat;
+    }
+
+    public function setDateAchat(\DateTimeInterface $dateAchat): self
+    {
+        $this->dateAchat = $dateAchat;
+
+        return $this;
+    }
+
+    public function getQuantite(): ?int
+    {
+        return $this->quantite;
+    }
+
+    public function setQuantite(int $quantite): self
+    {
+        $this->quantite = $quantite;
+
+        return $this;
+    }
+
+    public function getStatus(): ?string
+    {
+        return $this->status;
+    }
+
+    public function setStatus(string $status): self
+    {
+        $this->status = $status;
 
         return $this;
     }

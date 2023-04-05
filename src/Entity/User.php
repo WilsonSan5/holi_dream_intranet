@@ -40,6 +40,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Achat::class)]
     private Collection $achat;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $nomEntreprise = null;
+
+    #[ORM\ManyToOne(targetEntity: self::class)]
+    private ?self $conseiller = null;
+
     public function __construct()
     {
         $this->achat = new ArrayCollection();
@@ -170,6 +176,30 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $achat->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getNomEntreprise(): ?string
+    {
+        return $this->nomEntreprise;
+    }
+
+    public function setNomEntreprise(?string $nomEntreprise): self
+    {
+        $this->nomEntreprise = $nomEntreprise;
+
+        return $this;
+    }
+
+    public function getConseiller(): ?self
+    {
+        return $this->conseiller;
+    }
+
+    public function setConseiller(?self $conseiller): self
+    {
+        $this->conseiller = $conseiller;
 
         return $this;
     }

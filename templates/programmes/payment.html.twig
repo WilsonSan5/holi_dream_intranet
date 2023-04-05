@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 {% extends 'base.html.twig' %}
 
 {% block title %}Produit
@@ -49,7 +48,7 @@
 		</tbody>
 	</table>
 	<span class='hidden' id='id_produit'>{{ produit.id }}</span>
-	<span class='hidden'  id='id_planning'>{{ planning.id }}</span>
+	<span class='hidden' id='id_planning'>{{ planning.id }}</span>
 	<div
 		id="paiement">
 		<!-- Display a payment form -->
@@ -74,80 +73,3 @@
 
 <a href="{{ path('app_programmes') }}">Retour</a>
 {% endblock %}
-=======
-{% extends 'base.html.twig' %}
-
-{% block title %}Produit
-{% endblock %}
-
-
-{% block body %}
-
-<style>
-	#id_produit, #id_planning{
-		display:none;
-	}
-
-</style>
-
-
-	<h1>{{produit.title}}</h1>
-	<h2>
-		{{produit.introduction}}</h2>
-	<table class="table">
-		<tbody>
-			<tr>
-				<th>Utilisateur</th>
-				<td>
-					<span id='nomUser'>{{app.user.nom}}</span>
-					<span id='prenomUser'>{{app.user.prenom}}
-					</span>
-				</td>
-			</tr>
-			<tr>
-				<th>Email</th>
-				<td>
-					{{app.user.email}}</td>
-			</tr>
-			<tr>
-				<th>Planning</th>
-				<td>{{ planning.DateDepart|date('d/m/Y') }}
-					-
-					{{ planning.DateFin | date('y/m/Y') }}
-				</td>
-			</tr>
-			<tr>
-				<th>Prix</th>
-				<td>
-					<b>	<span id='prix'>{{ planning.prix }}</span>€</b>
-				</td>
-			</tr>
-		</tbody>
-	</table>
-	<span class='hidden' id='id_produit'>{{ produit.id }}</span>
-	<span class='hidden'  id='id_planning'>{{ planning.id }}</span>
-	<div
-		id="paiement">
-		<!-- Display a payment form -->
-		<form id="payment-form">
-			<div
-				id="link-authentication-element"><!--Stripe.js injects the Link Authentication Element-->
-			</div>
-			<div
-				id="payment-element"><!--Stripe.js injects the Payment Element-->
-			</div>
-			<button id="submit">
-				<div class="spinner hidden" id="spinner"></div>
-				<span id="button-text">Payer</span>
-			</button>
-			<div id="payment-message" class="hidden"></div>
-		</form>
-	</div>
-</div>
-
-<script type="text/javascript" src="https://js.stripe.com/v3/"></script>
-<script src='/stripe/checkout.js'></script>
-
-<a href="{{ path('app_programmes') }}">Retour</a>
-{% endblock %}
->>>>>>> 1db82d387010aea8a7f08216fc390bbb0a47f755

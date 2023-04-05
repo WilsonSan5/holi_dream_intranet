@@ -46,10 +46,20 @@ class Produit
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $image = null;
 
+    #[ORM\Column]
+    private ?int $prixTTC = null;
+
+    #[ORM\Column]
+    private ?bool $etat = null;
+
+    #[ORM\ManyToMany(targetEntity: Categorie::class, inversedBy: 'produits')]
+    private Collection $categorie;
+
     public function __construct()
     {
         $this->planning = new ArrayCollection();
         $this->achats = new ArrayCollection();
+        $this->categorie = new ArrayCollection();
     }
 
     public function __toString(): string
@@ -214,6 +224,54 @@ class Produit
     public function setImage(?string $image): self
     {
         $this->image = $image;
+
+        return $this;
+    }
+
+    public function getPrixTTC(): ?int
+    {
+        return $this->prixTTC;
+    }
+
+    public function setPrixTTC(int $prixTTC): self
+    {
+        $this->prixTTC = $prixTTC;
+
+        return $this;
+    }
+
+    public function isEtat(): ?bool
+    {
+        return $this->etat;
+    }
+
+    public function setEtat(bool $etat): self
+    {
+        $this->etat = $etat;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Categorie>
+     */
+    public function getCategorie(): Collection
+    {
+        return $this->categorie;
+    }
+
+    public function addCategorie(Categorie $categorie): self
+    {
+        if (!$this->categorie->contains($categorie)) {
+            $this->categorie->add($categorie);
+        }
+
+        return $this;
+    }
+
+    public function removeCategorie(Categorie $categorie): self
+    {
+        $this->categorie->removeElement($categorie);
 
         return $this;
     }
