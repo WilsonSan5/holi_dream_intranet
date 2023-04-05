@@ -113,7 +113,11 @@ class ProgrammesController extends AbstractController
         $id_produit = $jsonData[0]->id_produit;
         $id_planning = $jsonData[0]->id_planning;
 
+<<<<<<< HEAD
+        dump($donnees);
+=======
         // dump($donnees);
+>>>>>>> 1db82d387010aea8a7f08216fc390bbb0a47f755
 
         $produit =  $produitRepository->findOneBy(['id'=> $id_produit]);
         $planning = $planningRepository->findOneBy(['id' => $id_planning]);
