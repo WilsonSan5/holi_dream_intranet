@@ -22,7 +22,6 @@
         <tbody>
         {% for achat in user.achat %}
             <tr>
-            {{dump(achat.planning)}}
                 <td>{{ achat.id }}</td>
 				<td>{{ achat.produit }}</td>
                 <td>Du {{ achat.planning.DateDepart | date("d/m/Y") }} - au {{achat.planning.DateFin | date("d/m/Y")}}</td>
