@@ -7,7 +7,8 @@ const stripe = Stripe('pk_test_51Mf1j1FufBPCUONNqyxowfyRialcOGzND5Xpi7uudebU7aqv
 //Pointer sur le nom de domaine
 
 var id_produit = document.getElementById('id_produit').innerText
-var id_planning = document.getElementById('id_planning').innerText
+var id_plan
+ning = document.getElementById('id_planning').innerText
 
 
 const originUrl = document.location.origin
