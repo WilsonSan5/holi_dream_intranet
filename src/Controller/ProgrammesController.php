@@ -16,7 +16,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 use App\Entity\Achat;
 use Symfony\Component\HttpFoundation\Request;
-
+use DateTime;
 
 // Importation des bundles de paiement stripe
 use Stripe\PaymentIntent;
@@ -107,6 +107,8 @@ class ProgrammesController extends AbstractController
     #[Route('/confirmation', name: 'app_programmes_confirmation')]
     public function confirm(ProduitRepository $produitRepository, AchatRepository $achatRepository, UserInterface $userinterface, PlanningRepository $planningRepository): Response
     {
+        $date = new DateTime();
+        $date->format('d/m/Y H:m');
 
         $donnees = $_GET['donnees'];
         $jsonData = json_decode($donnees);
@@ -122,6 +124,10 @@ class ProgrammesController extends AbstractController
         $achat->setProduit($produit);
         $achat->setPlanning($planning);
         $achat->setPrix($prix);
+
+        $achat->setDateAchat($date);
+        $achat->setQuantite(1);
+        $achat->setStatus(true);
 
         $achatRepository->save($achat, true);
 

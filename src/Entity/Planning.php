@@ -31,6 +31,9 @@ class Planning
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $DateFin = null;
 
+    #[ORM\Column]
+    private ?int $quantite = null;
+
     public function __construct()
     {
         $this->achats = new ArrayCollection();
@@ -116,6 +119,18 @@ class Planning
     public function setDateFin(\DateTimeInterface $DateFin): self
     {
         $this->DateFin = $DateFin;
+
+        return $this;
+    }
+
+    public function getQuantite(): ?int
+    {
+        return $this->quantite;
+    }
+
+    public function setQuantite(int $quantite): self
+    {
+        $this->quantite = $quantite;
 
         return $this;
     }
