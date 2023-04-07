@@ -12,7 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 #[Route('/planning')]
-#[IsGranted('ROLE_ADMIN')]
+#[IsGranted('ROLE_EMP')]
 class PlanningController extends AbstractController
 {
     #[Route('/', name: 'app_planning_index', methods: ['GET'])]
@@ -36,7 +36,7 @@ class PlanningController extends AbstractController
             return $this->redirectToRoute('app_planning_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('planning/new.html.twig', [
+        return $this->render('planning/new.html.twig', [
             'planning' => $planning,
             'form' => $form,
         ]);
@@ -62,7 +62,7 @@ class PlanningController extends AbstractController
             return $this->redirectToRoute('app_planning_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('planning/edit.html.twig', [
+        return $this->render('planning/edit.html.twig', [
             'planning' => $planning,
             'form' => $form,
         ]);

@@ -16,6 +16,7 @@ use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
  * @method User|null findOneBy(array $criteria, array $orderBy = null)
  * @method User[]    findAll()
  * @method User[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method User[]    findByRole(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
 class UserRepository extends ServiceEntityRepository implements PasswordUpgraderInterface
 {
@@ -55,6 +56,22 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
 
         $this->save($user, true);
     }
+
+    public function findUserByRole($role){
+        $qb = $this->createQueryBuilder('u');
+
+        $qb
+            ->andWhere($qb->expr()->like('u.roles', ':role'))
+            ->setParameter('role', '%'.$role.'%')
+            ->orderBy('u.id', 'ASC');
+
+        return $qb
+            ->getQuery()
+            ->getResult();
+
+            
+            // Renvoie un tableau de tableau
+}
 
 //    /**
 //     * @return User[] Returns an array of User objects

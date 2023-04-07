@@ -5,6 +5,7 @@
 {% block body %}
     <h1>Gestion des plannings</h1>
 
+    <a href="{{ path('app_planning_new') }}">Créer un nouveau planning</a>
     <table class="table">
         <thead>
             <tr>
@@ -17,7 +18,7 @@
             </tr>
         </thead>
         <tbody>
-        {% for planning in plannings %}
+        {% for planning in plannings|reverse %}
             <tr>
                 <td>{{ planning.id }}</td>
                 <td>{{ planning.produit }}</td>
@@ -37,5 +38,4 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_planning_new') }}">Create new</a>
 {% endblock %}

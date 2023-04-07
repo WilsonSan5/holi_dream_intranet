@@ -12,7 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 #[Route('/produit')]
-#[IsGranted('ROLE_ADMIN')]
+#[IsGranted('ROLE_EMP')]
 class ProduitController extends AbstractController
 {
     #[Route('/', name: 'app_produit_index', methods: ['GET'])]
@@ -45,8 +45,11 @@ class ProduitController extends AbstractController
     #[Route('/{id}', name: 'app_produit_show', methods: ['GET'])]
     public function show(Produit $produit): Response
     {
+        $plannings = $produit->getPlanning();
         return $this->render('produit/show.html.twig', [
             'produit' => $produit,
+            'plannings' => $plannings
+
         ]);
     }
 

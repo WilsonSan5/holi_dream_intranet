@@ -26,17 +26,28 @@
 		<nav class="navbar navbar-expand-lg bg-body-primary">
 			<div class="container-fluid">
 				{% if is_granted('ROLE_ADMIN') %}
-					<a class="navbar-brand" href="{{path('app_home')}}">Holi Dream (Admin)</a>
+					<a class="navbar-brand" href="{{path('app_home')}}">Holi Dream Intranet (Admin)</a>
 				{% else %}
-					<a class="navbar-brand" href="{{path('app_home')}}">Holi Dream
-					</a>
+					<a class="navbar-brand" href="{{path('app_home')}}">Holi Dream Intranet(Employé)</a>
 				{% endif %}
+
 				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
 					<span class="navbar-toggler-icon"></span>
 				</button>
+
+
 				<div class="collapse navbar-collapse" id="navbarNav">
 					<ul class="navbar-nav">
 						{% if is_granted('ROLE_ADMIN') %}
+							{# <li class="nav-item"><a class="nav-link" href="{{path('app_achat_index')}}">Achats</a></li> #}
+							<li class="nav-item">
+								<a class="nav-link" href="{{path('app_emp_index')}}">Employés</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="{{path('app_user_index')}}">Utilisateurs</a>
+							</li>
+						{% endif %}
+						{% if is_granted('ROLE_EMP') %}
 							<li class="nav-item">
 								<a class="nav-link" href="{{path('app_planning_index')}}">Plannings</a>
 							</li>
@@ -44,47 +55,22 @@
 								<a class="nav-link" href="{{path('app_produit_index')}}">Produits</a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link" href="{{path('app_user_index')}}">Utilisateurs</a>
+								<a class="nav-link" href="{{path('app_user_index')}}">Vos utilisateurs</a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link" href="{{path('app_achat_index')}}"> Achats</a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link" href="{{path('app_compte')}}">Mon espace</a>
+								<a class="nav-link" href="{{path('app_compte_emp')}}">Mon espace</a>
 							</li>
 							<li class="nav-item">
 								<a class="nav-link" href="{{path('app_logout')}}">Déconnexion</a>
-
-							{% elseif is_granted('ROLE_USER') %}
-								<li class="nav-item">
-									<a class="nav-link" href="{{path('app_programmes')}}">Tous les programmes</a>
-								</li>
-								<li class="nav-item">
-									<a class="nav-link" href="{{path('app_compte')}}">Mon compte</a>
-								</li>
-								<li class="nav-item">
-									<a class="nav-link" href="{{path('app_logout')}}">Déconnexion</a>
-								</li>
-							{% else %}
-								<li class="nav-item">
-									<a class="nav-link" href="{{path('app_programmes')}}">Tous les programmes</a>
-								</li>
-								<li class="nav-item">
-									<a class="nav-link" href="{{path('app_login')}}">Connexion</a>
-								</li>
-								<li class="nav-item">
-									<a class="nav-link" href="{{path('app_register')}}">Inscription</a>
-								</li>
-							{% endif %}
-						</ul>
-					</div>
+							</li>
+						{% else %}
+							<li class="nav-item">
+								<a class="nav-link" href="{{path('app_login')}}">Connexion</a>
+							</li>
+						{% endif %}
+					</ul>
 				</div>
-			</nav>
-
-			<div class='container'> 
-			{% block body %}{% endblock %}
-				</div>
-			</body>
+			</div>
 		</body>
-	</html>
-</body></html>
+	</body>
+</html></body></html></nav><div class='container'> {% block body %}{% endblock %}</div></body></body></html></body></html>

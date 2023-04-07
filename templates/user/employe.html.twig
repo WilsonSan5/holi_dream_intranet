@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}User index
+{% endblock %}
+
+{% block body %}
+	<h1>Employés</h1>
+
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Id</th>
+				<th>Email</th>
+				<th>Nom</th>
+				<th>Prenom</th>
+				<th>Matricule</th>
+				<th>actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for user in users %}
+				<tr>
+					<td>{{ user.id }}</td>
+					<td>{{ user.email }}</td>
+					<td>{{ user.nom }}</td>
+					<td>{{ user.prenom }}</td>
+					<td>{{ user.matricule }}</td>
+					<td>
+						<a href="{{ path('app_user_show', {'id': user.id}) }}">Voir</a>
+						<a href="{{ path('app_user_edit', {'id': user.id}) }}">Modifier</a>
+					</td>
+				</tr>
+			{% else %}
+				<tr>
+					<td colspan="7">Aucun employé</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+
+	{% if is_granted('ROLE_ADMIN' ) %}
+		<a href="{{ path('app_emp_new') }}">Créer un nouvel employé</a>
+	{% endif %}
+{% endblock %}

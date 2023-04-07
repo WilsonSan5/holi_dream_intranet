@@ -46,6 +46,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\ManyToOne(targetEntity: self::class)]
     private ?self $conseiller = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $matricule = null;
+
     public function __construct()
     {
         $this->achat = new ArrayCollection();
@@ -101,6 +104,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
+      public function getRole(): array
+      {
+        $roles = $this->roles;
+        return $roles[0];
+      }
 
     /**
      * @see PasswordAuthenticatedUserInterface
@@ -200,6 +209,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setConseiller(?self $conseiller): self
     {
         $this->conseiller = $conseiller;
+
+        return $this;
+    }
+
+    public function getMatricule(): ?string
+    {
+        return $this->matricule;
+    }
+
+    public function setMatricule(?string $matricule): self
+    {
+        $this->matricule = $matricule;
 
         return $this;
     }

@@ -16,6 +16,7 @@ class PlanningType extends AbstractType
             ->add('DateFin')
             ->add('prix')
             ->add('produit')
+            ->add('quantite')
         ;
     }
 

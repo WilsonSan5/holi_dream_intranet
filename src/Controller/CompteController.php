@@ -18,27 +18,9 @@ use Symfony\Component\Security\Core\User\UserInterface;
 class CompteController extends AbstractController
 {
 
-    // Page d'accueil de compte (Elle va contenir 2 boutons : Achats et Commane)
 
-    #[Route('/', name: 'app_compte')]
+    #[Route('/', name: 'app_compte_emp')]
     public function index(): Response
-    {
-        return $this->render('compte/index.html.twig', [
-            'user' => $this->getUser()
-        ]);
-    }
-
-    #[Route('/achat', name: 'app_compte_achat')]
-    public function achat(UserInterface $userInterface): Response
-    {   
-        return $this->render('compte/achat.html.twig', [
-            'user' => $this->getUser(),
-        
-        ]);
-    }
-
-    #[Route('/utilisateur', name: 'app_compte_utilisateur')]
-    public function show(): Response
     {
         return $this->render('compte/show.html.twig', [
             'controller_name' => 'CompteController',
