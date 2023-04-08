@@ -11,11 +11,12 @@
 		<thead>
 			<tr>
 				<th>Id</th>
-				<th>Title</th>
+				<th>Pays</th>
 				<th>Prix Defaut</th>
-				<th>NbrJour</th>
-				<th>NbrNuit</th>
+				<th>Catégories
+				</th>
 				<th>actions</th>
+
 			</tr>
 		</thead>
 		<tbody>
@@ -24,8 +25,11 @@
 					<td>{{ produit.id }}</td>
 					<td>{{ produit.title }}</td>
 					<td>{{ produit.prixDefaut }} €</td>
-					<td>{{ produit.nbrJour }}</td>
-					<td>{{ produit.nbrNuit }}</td>
+					<td>
+					{% for categorie in produit.categorie %}
+					{{categorie.nom}}</td>
+					{% endfor %}
+					
 					<td>
 						<a href="{{ path('app_produit_show', {'id': produit.id}) }}">Voir</a>
 						<a href="{{ path('app_produit_edit', {'id': produit.id}) }}">Modifier</a>

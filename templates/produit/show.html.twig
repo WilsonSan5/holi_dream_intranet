@@ -40,6 +40,12 @@
 		</tbody>
 	</table>
 
+	<a href="{{ path('app_produit_index') }}">Voir tous les produits</a>
+
+	<a href="{{ path('app_produit_edit', {'id': produit.id}) }}">Modifier le produit</a>
+
+	{{ include('produit/_delete_form.html.twig') }}
+
 	<h2>Plannings associés</h2>
 
 	<a href="{{ path('app_planning_new',{id:produit.id}) }}">Créer un nouveau planning</a>
@@ -75,10 +81,4 @@
 		</tbody>
 	</table>
 
-
-	<a href="{{ path('app_produit_index') }}">back to list</a>
-
-	<a href="{{ path('app_produit_edit', {'id': produit.id}) }}">edit</a>
-
-	{{ include('produit/_delete_form.html.twig') }}
 {% endblock %}

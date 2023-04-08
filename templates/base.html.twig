@@ -49,28 +49,31 @@
 						{% endif %}
 						{% if is_granted('ROLE_EMP') %}
 							<li class="nav-item">
-								<a class="nav-link" href="{{path('app_planning_index')}}">Plannings</a>
+								<a class="nav-link" href="{{path('app_categorie_index')}}">Catégories</a>
 							</li>
 							<li class="nav-item">
 								<a class="nav-link" href="{{path('app_produit_index')}}">Produits</a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link" href="{{path('app_user_index')}}">Vos utilisateurs</a>
+								<a class="nav-link" href="{{path('app_planning_index')}}">Plannings</a>
 							</li>
-							<li class="nav-item">
-								<a class="nav-link" href="{{path('app_compte_emp')}}">Mon espace</a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link" href="{{path('app_logout')}}">Déconnexion</a>
-							</li>
-						{% else %}
-							<li class="nav-item">
-								<a class="nav-link" href="{{path('app_login')}}">Connexion</a>
-							</li>
-						{% endif %}
-					</ul>
-				</div>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="{{path('app_user_index')}}">Vos utilisateurs</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="{{path('app_compte_emp')}}">Mon espace</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="{{path('app_logout')}}">Déconnexion</a>
+						</li>
+					{% else %}
+						<li class="nav-item">
+							<a class="nav-link" href="{{path('app_login')}}">Connexion</a>
+						</li>
+					{% endif %}
+				</ul>
 			</div>
-		</body>
+		</div>
 	</body>
-</html></body></html></nav><div class='container'> {% block body %}{% endblock %}</div></body></body></html></body></html>
+</html></body></html></body></html></nav><div class='container'> {% block body %}{% endblock %}</div></body></body></html></body></html>

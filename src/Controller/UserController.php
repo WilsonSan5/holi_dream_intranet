@@ -38,6 +38,9 @@ class UserController extends AbstractController
         $form->handleRequest($request);
 
         $user->setConseiller($userRepository->findOneBy(['id' => 6]));
+
+
+        
         $user->setRoles(['ROLE_USER']);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -107,9 +110,16 @@ class UserController extends AbstractController
     public function show(User $user, UserRepository $userRepository): Response
     {
         $all_related_users = $userRepository->findBy(array('conseiller' => $user->getId()), array('conseiller' => 'ASC')); // Permet de récupérer tous les users aillant comme conseiller_id l'id de l'emp connecté
+        $role = $user->getRoles();
+        $role = $role[0];
+        $achats = $user->getAchat();
+
+    
 
         return $this->render('user/show.html.twig', [
             'user' => $user,
+            'role' => $role,
+            'achats' => $achats,
             'all_related_users' => $all_related_users
         ]);
     }

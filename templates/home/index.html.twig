@@ -1,16 +1,45 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Tableau de bord{% endblock %}
+{% block title %}Tableau de bord
+{% endblock %}
 
 {% block body %}
-<style>
+	<style></style>
 
-</style>
+	<h1>Bienvenue
+		{{app.user.nom}}
+		{{app.user.prenom}}</h1>
 
-<div>
-    <h1>Tableau de bord</h1>
-</div>
 
+	<div class='container'>
+		<h2>
+			Tableau de bord
+		</h2>
+		<a class="nav-link" href="{{path('app_compte_emp')}}">
+			<button>Mon espace
+			</button>
+		</a>
+		<a class="nav-link" href="{{path('app_user_index')}}">
+			<button>Mes utilisateurs</button>
+		</a>
+
+		<a class="nav-link" href="{{path('app_user_index')}}">
+			<button>Messages</button>
+		</a>
+		<a class="nav-link" href="{{path('app_categorie_index')}}">
+			<button>Gestion des catégories
+			</button>
+		</a>
+
+		<a class="nav-link" href="{{path('app_produit_index')}}">
+			<button>Gestion des produits
+			</button>
+		</a>
+		<a class="nav-link" href="{{path('app_logout')}}">
+			<button id='logout-btn'>Deconnexion
+			</button>
+		</a>
+	</div>
 
 
 {% endblock %}
