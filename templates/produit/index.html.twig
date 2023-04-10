@@ -13,8 +13,7 @@
 				<th>Id</th>
 				<th>Pays</th>
 				<th>Prix Defaut</th>
-				<th>Catégories
-				</th>
+				<th>Catégories</th>
 				<th>actions</th>
 
 			</tr>
@@ -27,8 +26,7 @@
 					<td>{{ produit.prixDefaut }} €</td>
 					<td>
 					{% for categorie in produit.categorie %}
-					{{categorie.nom}}</td>
-					{% endfor %}
+					<a href='{{path('app_categorie_show', {id : categorie.id })}}'>{{categorie.nom}}</a> {% endfor %}</td>
 					
 					<td>
 						<a href="{{ path('app_produit_show', {'id': produit.id}) }}">Voir</a>

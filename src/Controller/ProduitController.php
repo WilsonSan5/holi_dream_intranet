@@ -31,12 +31,14 @@ class ProduitController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $produit->setPrixTTC($produit->getPrixDefaut() * 1.2);
+            $produit->setEtat(true);
             $produitRepository->save($produit, true);
 
             return $this->redirectToRoute('app_produit_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('produit/new.html.twig', [
+        return $this->render('produit/new.html.twig', [
             'produit' => $produit,
             'form' => $form,
         ]);
@@ -62,10 +64,10 @@ class ProduitController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $produitRepository->save($produit, true);
 
-            return $this->redirectToRoute('app_produit_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_produit_show', ['id' => $produit->getId()], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('produit/edit.html.twig', [
+        return $this->render('produit/edit.html.twig', [
             'produit' => $produit,
             'form' => $form,
         ]);

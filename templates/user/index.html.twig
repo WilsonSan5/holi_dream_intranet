@@ -1,45 +1,50 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}User index{% endblock %}
+{% block title %}User index
+{% endblock %}
 
 {% block body %}
-    <h1>Vos utilisateurs</h1>
+	<h1>Vos utilisateurs</h1>
+	
+	{% if is_granted('ROLE_ADMIN' ) %}
+		<a href="{{ path('app_user_new') }}">Créer un utilisateur</a>
+	{% endif %}
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Email</th>
-                <th>Roles</th>
-                <th>Password</th>
-                <th>Nom</th>
-                <th>Prenom</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for user in users|reverse %}
-            <tr>
-                <td>{{ user.id }}</td>
-                <td>{{ user.email }}</td>
-                <td>{{ user.roles[0] }}</td>
-                <td>{{ user.password }}</td>
-                <td>{{ user.nom }}</td>
-                <td>{{ user.prenom }}</td>
-                <td>
-                    <a href="{{ path('app_user_show', {'id': user.id}) }}">Voir</a>
-                    <a href="{{ path('app_user_edit', {'id': user.id}) }}">Modifier</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="7">Aucun utilisateur attribué</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Id</th>
+				<th>Email</th>
+				<th>Roles</th>
+				<th>Nom</th>
+				<th>Prenom</th>
+				<th>actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for user in users|reverse %}
+				<tr>
+					<td>{{ user.id }}</td>
+					<td>{{ user.email }}</td>
+					<td>{{ user.roles[0] }}</td>
+					<td>{{ user.nom }}</td>
+					<td>{{ user.prenom }}</td>
+					<td>
+						<a href="{{ path('app_user_show', {'id': user.id}) }}">Voir</a>
+						<a href="{{ path('app_user_edit', {'id': user.id}) }}">Modifier</a>
+						<a href="{{ path('app_user_show', {'id': user.id}) }}">Messages</a>
 
-    {% if is_granted('ROLE_ADMIN' ) %}
-    <a href="{{ path('app_user_new') }}">Create new</a>
-    {% endif %}
+					</td>
+				</tr>
+			{% else %}
+				<tr>
+					<td colspan="7">Aucun utilisateur attribué</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+
+	{% if is_granted('ROLE_ADMIN' ) %}
+		<a href="{{ path('app_user_new') }}">Créer un utilisateur</a>
+	{% endif %}
 {% endblock %}

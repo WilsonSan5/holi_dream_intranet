@@ -30,13 +30,10 @@ class Categorie
         $this->produits = new ArrayCollection();
     }
 
-    public function __toString(){
+    public function __toString(){ // Pour convertir en String pour les afficher dans les forms
        
         return $this->nom;
     }
-
-
-
 
     public function getId(): ?int
     {

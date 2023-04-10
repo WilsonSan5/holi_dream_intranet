@@ -5,7 +5,14 @@
 
 {% block body %}
 
-<h1> {{produit.title}} </h1>
+	<a href='{{path('app_categorie_show', {id : produit.categorie[0].id })}}'>{{produit.categorie[0]}}</a>
+	>
+	<a>
+		{{produit.title}}</a>
+
+	<h1>
+		{{produit.title}}
+	</h1>
 
 	<table class="table">
 		<tbody>
@@ -23,20 +30,32 @@
 			</tr>
 			<tr>
 				<th>PrixDefaut</th>
-				<td>{{ produit.prixDefaut }} €</td>
-			</tr>
-			<tr>
-				<th>NbrJour</th>
-				<td>{{ produit.nbrJour }}</td>
-			</tr>
-			<tr>
-				<th>NbrNuit</th>
-				<td>{{ produit.nbrNuit }}</td>
+				<td>{{ produit.prixDefaut }}
+					€</td>
 			</tr>
 			<tr>
 				<th>DescriptionProgramme</th>
 				<td>{{ produit.descriptionProgramme }}</td>
 			</tr>
+			<tr>
+				<th>Etat</th>
+				<td>{{ produit.Etat }}</td>
+			</tr>
+
+			<tr>
+				<th>Catégories</th>
+				<td>
+					{% for categorie in produit.categorie %}
+						<a href='{{path('app_categorie_show', {id : categorie.id})}}'>
+							{{ categorie }}
+						</a>
+						/
+					{% endfor %}
+				</td>
+
+			</tr>
+
+
 		</tbody>
 	</table>
 
@@ -57,6 +76,7 @@
 				<th>Date de départ</th>
 				<th>Date de fin</th>
 				<th>Prix</th>
+				<th>Places restantes</th>
 				<th>actions</th>
 			</tr>
 		</thead>
@@ -65,12 +85,14 @@
 				<tr>
 					<td>{{ planning.id }}</td>
 					<td>{{ planning.produit }}</td>
-					<td>{{ planning.DateDepart ? planning.DateDepart|date('d-m-Y')}}</td>
-					<td>{{ planning.DateFin ? planning.DateFin|date('d-m-Y') }}</td>
-					<td>{{ planning.prix }}</td>
+					<td>{{ planning.DateDepart ? planning.DateDepart|date('d/m/Y')}}</td>
+					<td>{{ planning.DateFin ? planning.DateFin|date('d/m/Y') }}</td>
+					<td>{{ planning.prix }} € </td>
+					<td>{{planning.quantite}}
+					</td>
 					<td>
-						<a href="{{ path('app_planning_show', {'id': planning.id}) }}">show</a>
-						<a href="{{ path('app_planning_edit', {'id': planning.id}) }}">edit</a>
+						<a href="{{ path('app_planning_show', {'id': planning.id}) }}">Voir</a>
+						<a href="{{ path('app_planning_edit', {'id': planning.id}) }}">Modifier</a>
 					</td>
 				</tr>
 			{% else %}

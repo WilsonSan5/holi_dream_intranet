@@ -1,34 +1,56 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Planning{% endblock %}
+{% block title %}Planning
+{% endblock %}
 
 {% block body %}
-    <h1>Planning</h1>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ planning.id }}</td>
-            </tr>
-            <tr>
-                <th>DateDepart</th>
-                <td>{{ planning.DateDepart ? planning.DateDepart|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>DateFin</th>
-                <td>{{ planning.DateFin ? planning.DateFin|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>Prix</th>
-                <td>{{ planning.prix }}</td>
-            </tr>
-        </tbody>
-    </table>
+	<a href='{{path('app_categorie_show', {id : planning.produit.categorie[0].id })}}'>{{planning.produit.categorie[0]}}</a>
+	>
+	<a href='{{path('app_produit_show', {id : planning.produit.id })}}'>{{planning.produit}}</a>
+	>
+	<a>{{planning.DateDepart | date('d/m/Y')}}</a>
 
-    <a href="{{ path('app_planning_index') }}">back to list</a>
+	<h1>Du
+		{{ planning.DateDepart ? planning.DateDepart|date('d/m/Y') : '' }}
+		au
+		{{ planning.DateFin ? planning.DateFin|date('d/m/Y') : '' }}
+		({{planning.produit}})</h1>
 
-    <a href="{{ path('app_planning_edit', {'id': planning.id}) }}">edit</a>
 
-    {{ include('planning/_delete_form.html.twig') }}
+	<table class="table">
+		<tbody>
+			<tr>
+				<th>Id</th>
+				<td>{{ planning.id }}</td>
+			</tr>
+			<tr>
+				<th>Date de départ</th>
+				<td>{{ planning.DateDepart ? planning.DateDepart|date('d/m/Y') : '' }}</td>
+			</tr>
+			<tr>
+				<th>Date de fin</th>
+				<td>{{ planning.DateFin ? planning.DateFin|date('d/m/Y') : '' }}</td>
+			</tr>
+			<tr>
+				<th>Prix</th>
+				<td>{{ planning.prix }}
+					€</td>
+			</tr>
+			<tr>
+				<th>Places restantes</th>
+				<td>{{ planning.quantite }}</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<h2>
+		Derniers achats
+	</h2>
+
+	<a href="{{ path('app_planning_index') }}">Retour</a>
+
+	<a href="{{ path('app_planning_edit', {'id': planning.id}) }}">Modifier</a>
+
+	{{ include('planning/_delete_form.html.twig') }}
 {% endblock %}

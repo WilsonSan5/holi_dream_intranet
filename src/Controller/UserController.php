@@ -20,8 +20,12 @@ class UserController extends AbstractController
     #[Route('/', name: 'app_user_index', methods: ['GET'])]
     public function index(UserRepository $userRepository): Response
     {
-        $all_related_users = $userRepository->findBy(array('conseiller' => $this->getUser()->getId()), array('conseiller' => 'ASC')); // Permet de récupérer tous les users aillant comme conseiller_id l'id de l'emp connecté
 
+        if ($this->getUser()->getRoles()[0] == 'ROLE_ADMIN'){
+            $all_related_users = $userRepository->findUserByRole('ROLE_USER'); // findByUserRole() = method prise de stack overflow : à réviser...
+        }else{
+            $all_related_users = $userRepository->findBy(['conseiller' => $this->getUser()->getId()], ['conseiller' => 'ASC']); // Permet de récupérer tous les users aillant comme conseiller_id l'id de l'emp connecté
+        }
         dump($all_related_users);
         return $this->render('user/index.html.twig', [
             'users' => $all_related_users,
@@ -125,12 +129,18 @@ class UserController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_user_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, User $user, UserRepository $userRepository): Response
+    public function edit(Request $request, User $user, UserRepository $userRepository, UserPasswordHasherInterface $userPasswordHasher): Response
     {
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $user->setPassword( // Pour encypter le mdp lorsque qu'on le modifie.
+                $userPasswordHasher->hashPassword(
+                    $user,
+                    $form->get('password')->getData()
+                )
+            );
             $userRepository->save($user, true);
 
             return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);

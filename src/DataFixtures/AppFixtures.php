@@ -29,7 +29,7 @@ class AppFixtures extends Fixture
 
         // Création des catégories des produits et des plannings avec des boucles imbriquées
 
-        $continents = array('Europe', 'Asie', 'Amériques', 'Océanie', 'Afrique');
+        $continents = array('Europe', 'Asie', 'Amériques', 'Océanie', 'Afrique','Les plus visités', 'Les bons plans');
         $faker = Faker\Factory::create('fr_FR');
 
         foreach ($continents as $key => $nom) {
@@ -54,8 +54,12 @@ class AppFixtures extends Fixture
 
                 for ($k = 1; $k < mt_rand(0, 6); $k++) {
                     $planning = new Planning();
-                    $planning->setDateDepart($faker->dateTimeBetween('0 week', '+5 week'));
-                    $planning->setDateFin($faker->dateTimeBetween($planning->getDateDepart(), '+8 week'));
+
+                    $DateDepart = $faker->dateTimeBetween('-5 weeks','+5 weeks');
+                    $DateFin = $faker->dateTimeBetween($DateDepart, $DateDepart->format('Y-m-d H:i:s') . '+3 weeks');
+
+                    $planning->setDateDepart($DateDepart);
+                    $planning->setDateFin($DateFin);
                     $planning->setPrix(mt_rand(100, 3000));
                     $planning->setProduit($product);
                     $planning->setQuantite(mt_rand(5, 50));
