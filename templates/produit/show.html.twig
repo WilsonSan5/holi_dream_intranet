@@ -4,6 +4,13 @@
 {% endblock %}
 
 {% block body %}
+	<style>
+		img {
+			width: 640px;
+			height: 400px;
+			object-fit: cover;
+		}
+	</style>
 
 	<a href='{{path('app_categorie_show', {id : produit.categorie[0].id })}}'>{{produit.categorie[0]}}</a>
 	>
@@ -41,7 +48,6 @@
 				<th>Etat</th>
 				<td>{{ produit.Etat }}</td>
 			</tr>
-
 			<tr>
 				<th>Catégories</th>
 				<td>
@@ -52,8 +58,11 @@
 						/
 					{% endfor %}
 				</td>
-
 			</tr>
+
+			<div>
+				<img src='{{produit.image}}' alt='image de {{ produit.title }}'>
+			</div>
 
 
 		</tbody>
@@ -87,7 +96,9 @@
 					<td>{{ planning.produit }}</td>
 					<td>{{ planning.DateDepart ? planning.DateDepart|date('d/m/Y')}}</td>
 					<td>{{ planning.DateFin ? planning.DateFin|date('d/m/Y') }}</td>
-					<td>{{ planning.prix }} € </td>
+					<td>{{ planning.prix }}
+						€
+					</td>
 					<td>{{planning.quantite}}
 					</td>
 					<td>
