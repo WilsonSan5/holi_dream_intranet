@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f788b4c0a70a789cbf940baa5e952bfd",
+    "content-hash": "6da40ba8a0e07991a72285d68413b6b4",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -1914,6 +1914,46 @@
                 "source": "https://github.com/thephpleague/oauth2-client/tree/2.6.1"
             },
             "time": "2021-12-22T16:42:49+00:00"
+        },
+        {
+            "name": "menarasolutions/geographer-es",
+            "version": "0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/MenaraSolutions/geographer-es.git",
+                "reference": "9461ce85e85fa0d1d7c4abc2036737b3f6ba37a2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/MenaraSolutions/geographer-es/zipball/9461ce85e85fa0d1d7c4abc2036737b3f6ba37a2",
+                "reference": "9461ce85e85fa0d1d7c4abc2036737b3f6ba37a2",
+                "shasum": ""
+            },
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Denis Mysenko",
+                    "email": "denis@menara.com.au",
+                    "homepage": "https://www.menara.com.au"
+                }
+            ],
+            "description": "Spanish translations for Geographer library",
+            "homepage": "https://github.com/MenaraSolutions/geographer-es",
+            "keywords": [
+                "geographer",
+                "geolocation",
+                "localization",
+                "spanish"
+            ],
+            "support": {
+                "issues": "https://github.com/MenaraSolutions/geographer-es/issues",
+                "source": "https://github.com/MenaraSolutions/geographer-es/tree/master"
+            },
+            "time": "2016-10-02T08:31:57+00:00"
         },
         {
             "name": "monolog/monolog",

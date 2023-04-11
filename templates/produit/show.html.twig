@@ -5,7 +5,8 @@
 
 {% block body %}
 	<style>
-		img {
+		#image_produit {
+
 			width: 640px;
 			height: 400px;
 			object-fit: cover;
@@ -61,7 +62,7 @@
 			</tr>
 
 			<div>
-				<img src='{{produit.image}}' alt='image de {{ produit.title }}'>
+				<img src='{{produit.image}}' alt='image de {{ produit.title }}' id='image_produit'>
 			</div>
 
 
@@ -77,7 +78,8 @@
 	<h2>Plannings associés</h2>
 
 	<a href="{{ path('app_planning_new',{id:produit.id}) }}">Créer un nouveau planning</a>
-	<table class="table">
+	<table class="index-table">
+
 		<thead>
 			<tr>
 				<th>Id</th>

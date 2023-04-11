@@ -50,7 +50,21 @@ class ProduitController extends AbstractController
     #[Route('/{id}', name: 'app_produit_show', methods: ['GET'])]
     public function show(Produit $produit): Response
     {
+        // Affiche une photo aléatoire depuis la librarie Unsplash avec en paramètre le nom du pays
+        // Il se peut qu'il n'y aucune image. Solution temporaire.
+
+        // Unsplash\HttpClient::init([
+        //     'applicationId' => 'LpweD9NpAs16oiPMyP4XmylpMuwOwOv3RnKibWyF9-w',
+        //     'secret' => 'SIFMdWYkzOM-zIk7xvEJrQDOs7aQPfabVVd2EkGkdA8',
+        //     'callbackUrl' => 'https://your-application.com/oauth/callback',
+        //     'utmSource' => 'Ventalis'
+        // ]);
+        // $filters = ['query' => $produit->getTitle(), 'w' => 640, 'h' => 400];
+        // $randomPhoto = Unsplash\Photo::random($filters)->toArray()['urls']['small'];
+        // $produit->setImage($randomPhoto);
+
         $plannings = $produit->getPlanning();
+
         return $this->render('produit/show.html.twig', [
             'produit' => $produit,
             'plannings' => $plannings
@@ -77,16 +91,13 @@ class ProduitController extends AbstractController
                 // Move the file to the directory where brochures are stored
                 try {
                     $image->move(
-                        $this->getParameter('produit_img_dir'),
-                        $newFilename
+                        $this->getParameter('produit_img_dir'), // Bouger l'image dans le bon dossier que j'ai paramétré dans services.yml
+
+                        $newFilename // nom du fichier uploadé 
                     );
                 } catch (FileException $e) {
-                    // ... handle exception if something happens during file upload
                 }
-
-                // updates the 'brochureFilename' property to store the PDF file name
-                // instead of its contents
-                $produit->setImage('/images/produits/'.$newFilename);
+                $produit->setImage('/images/produits/'.$newFilename); // attribution du chemin
             }
 
             $produitRepository->save($produit, true);
