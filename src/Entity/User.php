@@ -49,9 +49,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $matricule = null;
 
+    #[ORM\ManyToMany(targetEntity: Messagerie::class, mappedBy: 'User')]
+    private Collection $messageries;
+
+
+
     public function __construct()
     {
         $this->achat = new ArrayCollection();
+        $this->messageries = new ArrayCollection();
     }
 
     public function __toString(): string
@@ -104,12 +110,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
-
-      public function getRole(): array
-      {
-        $roles = $this->roles;
-        return $roles[0];
-      }
 
     /**
      * @see PasswordAuthenticatedUserInterface
@@ -221,6 +221,33 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setMatricule(?string $matricule): self
     {
         $this->matricule = $matricule;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Messagerie>
+     */
+    public function getMessageries(): Collection
+    {
+        return $this->messageries;
+    }
+
+    public function addMessagery(Messagerie $messagery): self
+    {
+        if (!$this->messageries->contains($messagery)) {
+            $this->messageries->add($messagery);
+            $messagery->addUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMessagery(Messagerie $messagery): self
+    {
+        if ($this->messageries->removeElement($messagery)) {
+            $messagery->removeUser($this);
+        }
 
         return $this;
     }

@@ -19,14 +19,6 @@ use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 
 class ProductFixtures extends Fixture 
 {
-
-
-    // public function Unsplash()
-    // {
-    //     $filters = ['query' => 'city', 'w' => 640, 'h' => 400];
-    //     $randomPhoto = Unsplash\Photo::random($filters)->toArray()['urls']['small'];
-    //     return $randomPhoto;
-    // }
     private $userPasswordHasherInterface;
     public function __construct(UserPasswordHasherInterface $userPasswordHasherInterface)
     {
@@ -35,17 +27,8 @@ class ProductFixtures extends Fixture
 
     public function load(ObjectManager $manager) 
     {
-
-        // Unsplash\HttpClient::init([
-        //     'applicationId' => 'LpweD9NpAs16oiPMyP4XmylpMuwOwOv3RnKibWyF9-w',
-        //     'secret' => 'SIFMdWYkzOM-zIk7xvEJrQDOs7aQPfabVVd2EkGkdA8',
-        //     'callbackUrl' => 'https://your-application.com/oauth/callback',
-        //     'utmSource' => 'Ventalis'
-        // ]);
-
         $faker = Faker\Factory::create('fr_FR');
         $categories = $manager->getRepository(Categorie::class)->findAll(); // création d'un array de catégories(objet)
-
 
         for ($i = 0; $i < 20; $i++) {
 
@@ -133,13 +116,10 @@ class ProductFixtures extends Fixture
 
                 $manager->persist($user);
             }
+            
             $manager->persist($emp);
         }
         
         $manager->flush();
     }
-    // public function getDependencies(): array
-    // {
-    //     return [AppFixtures::class];
-    // }
 }
