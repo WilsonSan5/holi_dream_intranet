@@ -3,6 +3,11 @@
 {% block title %}Messages{% endblock %}
 
 {% block body %}
+<style> 
+.user-message {
+
+}
+</style>
 
     <h1> {{messagerie.objet}}</h1>
 
@@ -12,7 +17,14 @@
     </form>
 
     {% for message in messages|reverse %}
-        <p class={% if app.user.email ==  %}>{{message.author.nom}} {{message.author.prenom}} : {{message.contenu}} </p>
+        <p class=' {% if app.user.id == message.author.id %} user-message {% endif %}'> 
+        
+        {% if app.user.id == message.author.id %}
+            Vous
+        {% else %}
+        {{message.author.nom}} {{message.author.prenom}}
+        {% endif %}
+         : {{message.contenu}} </p>
     {% endfor %}
 
 {% endblock %}
