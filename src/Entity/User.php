@@ -49,9 +49,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $matricule = null;
 
+    #[ORM\ManyToMany(targetEntity: Messagerie::class, mappedBy: 'User')]
+    private Collection $messageries;
+
+    #[ORM\OneToMany(mappedBy: 'author', targetEntity: Message::class)]
+    private Collection $messages;
+
+
+
     public function __construct()
     {
         $this->achat = new ArrayCollection();
+        $this->messageries = new ArrayCollection();
+        $this->messages = new ArrayCollection();
     }
 
     public function __toString(): string
@@ -104,12 +114,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
-
-      public function getRole(): array
-      {
-        $roles = $this->roles;
-        return $roles[0];
-      }
 
     /**
      * @see PasswordAuthenticatedUserInterface
@@ -221,6 +225,63 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setMatricule(?string $matricule): self
     {
         $this->matricule = $matricule;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Messagerie>
+     */
+    public function getMessageries(): Collection
+    {
+        return $this->messageries;
+    }
+
+    public function addMessagery(Messagerie $messagery): self
+    {
+        if (!$this->messageries->contains($messagery)) {
+            $this->messageries->add($messagery);
+            $messagery->addUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMessagery(Messagerie $messagery): self
+    {
+        if ($this->messageries->removeElement($messagery)) {
+            $messagery->removeUser($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Message>
+     */
+    public function getMessages(): Collection
+    {
+        return $this->messages;
+    }
+
+    public function addMessage(Message $message): self
+    {
+        if (!$this->messages->contains($message)) {
+            $this->messages->add($message);
+            $message->setAuthor($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMessage(Message $message): self
+    {
+        if ($this->messages->removeElement($message)) {
+            // set the owning side to null (unless already changed)
+            if ($message->getAuthor() === $this) {
+                $message->setAuthor(null);
+            }
+        }
 
         return $this;
     }

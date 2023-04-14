@@ -22,7 +22,12 @@ class UserType extends AbstractType
                         'min' => 6,
                         'minMessage' => 'Le mot de passe doit faire au moins {{ limit }} caractères',
                         'max' => 4096
-                    ])
+                    ]),
+                    new Regex([
+                        'pattern' => '/^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d!@#$%^&*()_+]{8,}$/',
+                        'match' => true,
+                        'message' => 'Votre mot de passe doit contenir au moins une majuscule, un chiffre et un caractère spécial '
+                        ])
                 ]
             ])
             ->add('nom')
