@@ -3,18 +3,34 @@
 {% block title %}Hello MessageController!{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+<table class="index-table">
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ '/Applications/MAMP/htdocs/holi_dream_intranet/src/Controller/MessageController.php'|file_link(0) }}">src/Controller/MessageController.php</a></code></li>
-        <li>Your template at <code><a href="{{ '/Applications/MAMP/htdocs/holi_dream_intranet/templates/message/index.html.twig'|file_link(0) }}">templates/message/index.html.twig</a></code></li>
-    </ul>
-</div>
+		<thead>
+			<tr>
+                <th>#</th>
+				<th>objet</th>
+				<th>Nom</th>
+				<th>Prenom</th>
+				<th>actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for messagerie in messageries|reverse %}
+				<tr>
+                    <td>{{ messagerie.id }} </td>
+					<td><a href='{{path('app_message_show',{id : messagerie.id})}}'>{{ messagerie.objet }}</a></td>
+					<td>{{ messagerie.user[1].nom }} </td>
+					<td> {{ messagerie.user[1].prenom }} </td> 
+					<td>
+						<a href="{{ path('app_user_show', {'id': messagerie.id}) }}">Supprimer</a>
+					</td>
+				</tr>
+			{% else %}
+				<tr>
+					<td colspan="7">Aucune messagerie</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
 {% endblock %}
