@@ -116,7 +116,6 @@ class ProductFixtures extends Fixture
 
                 $manager->persist($user);
             }
-            
             $manager->persist($emp);
         }
         

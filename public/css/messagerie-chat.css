@@ -1,0 +1,37 @@
+*{
+    /* border: 1px solid red; */
+}
+.scroll-box{
+    height: min-content;
+    max-height: 550px ;
+    overflow-y: scroll;
+    margin-bottom: 1em;
+}
+
+.message{
+    width: max-content;
+    background-color: rgb(226, 226, 226);
+    padding: 0.5em 1em;
+    border-radius: 10px;
+
+}
+
+.user-message{
+    height: max-content;
+    display: block;
+    margin-left: auto;
+    margin-right: 0;
+    background-color: rgb(31, 79, 255);
+    color: white;
+}
+
+input{
+    resize: none;
+    width: 100%;
+    
+}
+#send-button{
+    display: block;
+    margin-left: auto;
+    margin-right: 0;
+}
