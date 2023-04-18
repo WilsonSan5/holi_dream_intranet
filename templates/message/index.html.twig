@@ -4,6 +4,11 @@
 {% endblock %}
 
 {% block body %}
+<style>
+	.index-table{
+		margin-bottom : 2em;
+	}
+</style>
 
 	<table class="index-table">
 		<h2>
@@ -19,8 +24,7 @@
 			</tr>
 		</thead>
 		<tbody>
-			{% for messagerie in messageries|reverse %}
-				{% if messagerie.statut == null %}
+			{% for messagerie in messageries|reverse|filter(messagerie => messagerie.statut == null) %}
 					<tr>
 						<td>{{ messagerie.id }}
 						</td>
@@ -37,7 +41,6 @@
 
 						</td>
 					</tr>
-				{% endif %}
 			{% else %}
 				<tr>
 					<td colspan="7">Aucune messagerie</td>
@@ -84,7 +87,7 @@
 	</table>
 	<table class="index-table">
 		<h2>
-			Archivés
+			Archivé
 		</h2>
 		<thead>
 			<tr>

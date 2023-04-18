@@ -14,8 +14,10 @@
 			<button>Archiver</button>
 		</a>
 	{% endif %}
-	<h1>
-		{{messagerie.objet}}</h1>
+
+	<h1>{{messagerie.objet}}</h1>
+	<a href='{{path('app_user_show' , {id : messagerie.user[0].id })}}'>{{messagerie.user[0].nom}} {{messagerie.user[0].prenom}}</a>
+
 	<div class='scroll-box'>
 		<p>
 			{{messages[0].contenu}}
