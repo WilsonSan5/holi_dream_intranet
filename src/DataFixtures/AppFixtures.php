@@ -16,7 +16,7 @@ class AppFixtures extends Fixture
 
         // Création des catégories
 
-        $categories = ['Europe', 'Asie', 'Amériques', 'Océanie', 'Afrique', 'Les plus visités', 'Les bons plans'];
+        $categories = ['Tous', 'Europe', 'Asie', 'Amériques', 'Océanie', 'Afrique', 'plusVisités', 'bonsPlans', 'none', 'famille', 'couple', 'seul'];
 
 
         foreach ($categories as $key => $nom) {
@@ -24,7 +24,7 @@ class AppFixtures extends Fixture
             $category = new Categorie();
             $category->setNom($nom);
             $category->setDescription($faker->sentence(6, true));
-            
+
             $manager->persist($category);
 
         }

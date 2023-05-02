@@ -4,7 +4,14 @@
 {% endblock %}
 
 {% block body %}
+	<style>
+		img {
+			width: 640px;
+			height: auto;
+		}
+	</style>
 	<h1>{{categorie.nom}}</h1>
+	<img src='{{categorie.image}}'>
 
 	<table class="table">
 		<tbody>
@@ -29,15 +36,13 @@
 	<h2>Produits associés</h2>
 	<a href="{{ path('app_produit_new') }}">Créer un produit</a>
 
-<table class="index-table">
+	<table class="index-table">
 
 		<thead>
 			<tr>
 				<th>Id</th>
 				<th>Title</th>
 				<th>Prix Defaut</th>
-				<th>NbrJour</th>
-				<th>NbrNuit</th>
 				<th>actions</th>
 			</tr>
 		</thead>
@@ -48,8 +53,6 @@
 					<td>{{ produit.title }}</td>
 					<td>{{ produit.prixDefaut }}
 						€</td>
-					<td>{{ produit.nbrJour }}</td>
-					<td>{{ produit.nbrNuit }}</td>
 					<td>
 						<a href="{{ path('app_produit_show', {'id': produit.id}) }}">Voir</a>
 						<a href="{{ path('app_produit_edit', {'id': produit.id}) }}">Modifier</a>
@@ -64,7 +67,6 @@
 	</table>
 
 	<a href="{{ path('app_categorie_index') }}">Retour à la liste</a>
-	
 
 
 {% endblock %}

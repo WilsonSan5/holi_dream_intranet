@@ -20,9 +20,9 @@ class MessageController extends AbstractController
     public function index(): Response
     {
         $user = $this->getUser();
-
         $messageries = $user->getMessageries(); //tableau d'objet messagerie
-
+        
+        
         return $this->render('message/index.html.twig', [
             'controller_name' => 'MessageController',
             'messageries' => $messageries,
@@ -31,14 +31,17 @@ class MessageController extends AbstractController
     }
 
     #[Route('/message/{id}', name: 'app_message_show', methods: ['GET'])]
-    public function show(Messagerie $messagerie, MessagerieRepository $messagerieRepository): Response
+    public function show(Messagerie $messagerie, MessagerieRepository $messagerieRepository,MessageRepository $messageRepository): Response
     {
         if($messagerie->getStatut() == null){ //Si le statut est null alors on le passe en 'ongoing'
             $messagerie->setStatut('ongoing');
             $messagerieRepository->save($messagerie, true);
         }
         $messages = $messagerie->getMessages();
-
+        foreach($messages as $message){
+            $message->setIsRead(true);
+            $messageRepository->save($message, true);
+        }
         return $this->render('message/show.html.twig', [
             'messagerie' => $messagerie,
             'messages' => $messages
@@ -69,6 +72,7 @@ class MessageController extends AbstractController
             $newMessage->setContenu($_POST['message']);
             $newMessage->setAuthor($this->getUser());
             $newMessage->setMessagerie($messagerie);
+            $newMessage->setIsRead(false);
 
             $messageRepository->save($newMessage, true);
             return $this->redirectToRoute('app_message_show', ['id' => $messagerie->getId()]);

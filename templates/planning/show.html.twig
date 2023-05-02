@@ -47,6 +47,45 @@
 	<h2>
 		Derniers achats
 	</h2>
+	<table class="index-table">
+		<thead>
+			<tr>
+				<th>Id</th>
+				<th>Utilisateur</th>
+				<th>Date de départ</th>
+				<th>Date de fin</th>
+				<th>Prix</th>
+				<th>Quantité</th>
+				<th>Date d'achat</th>
+				<th>actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for achat in planning.achats %}
+				<tr>
+					<td>{{ achat.id }}</td>
+					<td><a href='{{path('app_user_show', {id : achat.user.id })}}'>
+						{{achat.user.nom}}
+						{{achat.user.prenom}}</td>
+					<td>{{ achat.planning.DateDepart|date('d/m/Y')}}</td>
+					<td>{{ achat.planning.DateFin|date('d/m/Y')}}</td>
+					<td>{{ achat.prix|number_format(0,',',' ') }}
+						€</td>
+					<td>{{achat.quantite}}</td>
+					<td>{{achat.DateAchat|date('d/m/Y')}}
+					</td>
+					<td>
+						<a href="{{ path('app_achat_show', {'id': achat.id}) }}">Voir</a>
+					</td>
+				</tr>
+			{% else %}
+				<tr>
+					<td colspan="3">Aucun achat</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+
 
 	<a href="{{ path('app_planning_index') }}">Retour</a>
 

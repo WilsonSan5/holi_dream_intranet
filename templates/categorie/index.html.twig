@@ -4,9 +4,9 @@
 
 {% block body %}
     <h1>Gestion des catégories</h1>
+    <a href="{{ path('app_categorie_new') }}">Créer une nouvelle catégorie</a>
 
 <table class="index-table">
-
         <thead>
             <tr>
                 <th>Id</th>
@@ -34,5 +34,4 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_categorie_new') }}">Créer une nouvelle catégorie</a>
 {% endblock %}

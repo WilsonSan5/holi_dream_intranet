@@ -4,43 +4,45 @@
 {% endblock %}
 
 {% block body %}
-	<style></style>
+	<style>
+		button {
+			font-size: 1.5em;
+			border: 1px solid black;
+			border-radius: 5px;
+			padding: 0.5em 0.5em;
+		}
 
-	<h1>Bienvenue
+		#logout-btn {
+			background-color: red;
+			color: white;
+			text-transform: uppercase;
+		}
+			{# #button-container {
+				display: flex;
+				flex-wrap: wrap;
+				gap: 0.5em;
+			}  #}
+		
+	</style>
+
+	<h1>
 		{{app.user.nom}}
 		{{app.user.prenom}}</h1>
+	<p>
+		{{app.user.matricule}}
+	</p>
 
-
-	<div class='container'>
-		<h2>
-			Tableau de bord
-		</h2>
-		<a class="nav-link" href="{{path('app_compte_emp')}}">
-			<button>Mon espace
-			</button>
-		</a>
-		<a class="nav-link" href="{{path('app_user_index')}}">
-			<button>Mes utilisateurs</button>
-		</a>
-
-		<a class="nav-link" href="{{path('app_user_index')}}">
-			<button>Messages</button>
-		</a>
-		<a class="nav-link" href="{{path('app_categorie_index')}}">
-			<button>Gestion des catégories
-			</button>
-		</a>
-
-		<a class="nav-link" href="{{path('app_produit_index')}}">
-			<button>Gestion des produits
-			</button>
-		</a>
-		<a class="nav-link" href="{{path('app_logout')}}">
-			<button id='logout-btn'>Déconnexion
-			</button>
-		</a>
+	<h2>
+		Tableau de bord
+	</h2>
+	<div id='button-container' class='row g-2'>
+		<button class='col-4' type='button' onclick="location.href='{{path('app_compte_emp')}}';">Mon espace</button>
+		<button class='col-4' type='button' onclick="location.href='{{path('app_user_index')}}';">Mes utilisateurs</button>
+		<button class='col-4' type='button' onclick="location.href= '{{path('app_message')}}';">Messages</button>
+		<button class='col-4' type='button' onclick="location.href='{{path('app_categorie_index')}}';">Gestion des catégories</button>
+		<button class='col-4' type='button' onclick="location.href='{{path('app_produit_index')}}';">Gestion des produits</button>
+		<button class='col-4' type='button' onclick="location.href='{{path('app_logout')}}';" id='logout-btn'>Déconnexion</button>
 	</div>
-
 
 
 {% endblock %}

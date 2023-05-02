@@ -12,22 +12,22 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 
 class PlanningType extends AbstractType
-{   
+{
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('DateDepart', DateType::class,[
+            ->add('DateDepart', DateType::class, [
                 'widget' => 'single_text'
             ])
-            ->add('DateFin', DateType::class,[
+            ->add('DateFin', DateType::class, [
                 'widget' => 'single_text'
             ])
             ->add('prix')
-            ->add('produit', EntityType::class,[
+            ->add('produit', EntityType::class, [
                 'class' => Produit::class,
-                'choice_label' => 'title',
-                'placeholder' => 'caca'
+                'choice_label' => 'pays',
+                'placeholder' => 'titre'
             ])
             ->add('quantite')
         ;

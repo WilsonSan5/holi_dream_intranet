@@ -54,8 +54,7 @@
 	{% if role == 'ROLE_EMP' %}
 		<h2>Utilisateurs</h2>
 
-<table class="index-table">
-
+		<table class="index-table">
 			<thead>
 				<tr>
 					<th>Id</th>
@@ -85,15 +84,14 @@
 		</table>
 	{% else %}
 		<h2>Achats</h2>
-		<table class="table">
+		<table class="index-table">
 			<thead>
 				<tr>
 					<th>Id</th>
-					<th>Utilisateur</th>
 					<th>Produit</th>
 					<th>Date</th>
 					<th>Prix</th>
-					<th>Statut</th>
+					<th>Date d'achat</th>
 					<th>actions</th>
 				</tr>
 			</thead>
@@ -101,13 +99,24 @@
 				{% for achat in achats %}
 					<tr>
 						<td>{{ achat.id }}</td>
-						<td>{{ achat.user }}</td>
-						<td>{{ achat.produit }}</td>
-						<td>Du{{ achat.planning.DateDepart|date('d/m/Y')}} au {{ achat.planning.DateFin|date('d/m/Y')}}</td>
-						<td>{{ achat.prix }}</td>
+						<td>
+							<a href='{{path('app_produit_show',{id : achat.produit.id })}}'>{{ achat.produit }}
+							</a>
+						</td>
+						<td>
+							<a href='{{path('app_planning_show',{id : achat.planning.id })}}'>Du
+								{{ achat.planning.DateDepart|date('d/m/Y')}}
+								au
+								{{ achat.planning.DateFin|date('d/m/Y')}}</td>
+						</td>
+
+						<td>{{  achat.prix|number_format(0, '.', ' ') }}
+							€</td>
+						<td>
+							{{achat.DateAchat|date('d/m/Y')}}
+						</td>
 						<td>
 							<a href="{{ path('app_achat_show', {'id': achat.id}) }}">Voir</a>
-							<a href="{{ path('app_achat_edit', {'id': achat.id}) }}">Modifier</a>
 						</td>
 					</tr>
 				{% else %}

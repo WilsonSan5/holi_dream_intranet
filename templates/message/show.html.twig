@@ -5,40 +5,42 @@
 
 {% block body %}
 
-	<link rel='stylesheet' href='/css/messagerie-chat.css'>
+<link rel='stylesheet' href='/css/messagerie-chat.css'>
 
-	<a href='{{path('app_message')}}'>Retour</a>
+<a href='{{path('app_message')}}'>Retour</a>
 
-	{% if messagerie.statut == 'ongoing' or messagerie.statut == null %}
-		<a href='{{path('app_message_statut', {id : messagerie.id, statut : 'done' })}}'>
-			<button>Archiver</button>
-		</a>
-	{% endif %}
+{% if messagerie.statut == 'ongoing' or messagerie.statut == null %}
+	<button type="button" onclick="location.href ='{{path('app_message_statut', {id : messagerie.id, statut : 'done' })}}';" id='archiver-button'>Archiver</button>
+{% else %}
+	<button type="button" onclick="location.href ='{{path('app_message_statut', {id : messagerie.id, statut : 'ongoing' })}}';" id='archiver-button'>Désarchiver</button>
+{% endif %}
 
-	<h1>{{messagerie.objet}}</h1>
-	<a href='{{path('app_user_show' , {id : messagerie.user[0].id })}}'>{{messagerie.user[0].nom}} {{messagerie.user[0].prenom}}</a>
+<h1>{{messagerie.objet}}</h1>
+<a href='{{path('app_user_show' , {id : messagerie.user[0].id })}}'>{{messagerie.user[0].nom}}
+	{{messagerie.user[0].prenom}}</a>
 
-	<div class='scroll-box'>
-		<p>
-			{{messages[0].contenu}}
+<div class='scroll-box'>
+	<p>
+		{{messages[0].contenu}}
+	</p>
+	<hr>
+	{% for message in messages|slice(1) %}
+		<p class='message {% if app.user.id == message.author.id %} user-message {% endif %}'>
+
+			{% if app.user.id == message.author.id %}
+				Vous
+			{% else %}
+				{{message.author.nom}}
+				{{message.author.prenom}}
+			{% endif %}
+			:
+			{{message.contenu}}
 		</p>
-		<hr>
-		{% for message in messages|slice(1) %}
-			<p class='message {% if app.user.id == message.author.id %} user-message {% endif %}'>
+	{% endfor %}
+</div>
 
-				{% if app.user.id == message.author.id %}
-					Vous
-				{% else %}
-					{{message.author.nom}}
-					{{message.author.prenom}}
-				{% endif %}
-				:
-				{{message.contenu}}
-			</p>
-		{% endfor %}
-	</div>
-
+{% if messagerie.statut == 'ongoing' or messagerie.statut == null %}
 	<form action="{{path('app_message_send',{id: messagerie.id})}}" method="POST">
 		<input type="text" name="message"></input>
 	<button id='send-button' type='submit'>Envoyer</button>
-</form>{% endblock %}
+</form>{% endif %}{% endblock %}

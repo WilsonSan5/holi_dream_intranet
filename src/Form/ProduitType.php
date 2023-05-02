@@ -27,21 +27,20 @@ class ProduitType extends AbstractType
             ->add('introduction', TextareaType::class)
             ->add('description')
             ->add('prixDefaut')
-            ->add('nbrJour')
-            ->add('nbrNuit')
             ->add('descriptionProgramme')
             ->add('image', FileType::class, [
-                'label' => 'Image (jpg)',
+                'label' => 'Image (jpg,jpeg,webp)',
 
                 'mapped' => false,
                 'required' => false,
-    
+
                 'constraints' => [
                     new File([
-                        
+
                         'mimeTypes' => [
                             'image/jpg',
                             'image/jpeg',
+                            'image/webp'
                         ],
                         'mimeTypesMessage' => 'Format d\'image non pris en charge',
                     ])

@@ -7,11 +7,12 @@
 	<h1>Gestion des produits</h1>
 	<a href="{{ path('app_produit_new') }}">Créer produit</a>
 
-<table class="index-table">
+	<table class="index-table">
 
 		<thead>
 			<tr>
 				<th>Id</th>
+				<th>Image</th>
 				<th>Pays</th>
 				<th>Prix Defaut</th>
 				<th>Catégories</th>
@@ -23,12 +24,18 @@
 			{% for produit in produits|reverse %}
 				<tr>
 					<td>{{ produit.id }}</td>
-					<td>{{ produit.title }}</td>
-					<td>{{ produit.prixDefaut }} €</td>
 					<td>
-					{% for categorie in produit.categorie %}
-					<a href='{{path('app_categorie_show', {id : categorie.id })}}'>{{categorie.nom}}</a> {% endfor %}</td>
-					
+						<img src='{{ produit.image }}' style='width:100px;'>
+					</td>
+					<td>{{ produit.pays }}</td>
+					<td>{{ produit.prixDefaut }}
+						€</td>
+					<td>
+						{% for categorie in produit.categorie %}
+							<a href='{{path('app_categorie_show', {id : categorie.id })}}'>{{categorie.nom}}</a>
+						{% endfor %}
+					</td>
+
 					<td>
 						<a href="{{ path('app_produit_show', {'id': produit.id}) }}">Voir</a>
 						<a href="{{ path('app_produit_edit', {'id': produit.id}) }}">Modifier</a>

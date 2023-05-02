@@ -35,7 +35,7 @@ class UserType extends AbstractType
             ])
             ->add('nom')
             ->add('prenom')
-            ->add('conseiller')
+
         ;
     }
 

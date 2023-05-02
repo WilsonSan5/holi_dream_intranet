@@ -13,7 +13,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 #[Route('/achat')]
 
-#[IsGranted('ROLE_ADMIN')]
+#[IsGranted('ROLE_EMP')]
 class AchatController extends AbstractController
 {
     #[Route('/', name: 'app_achat_index', methods: ['GET'])]

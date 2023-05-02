@@ -20,10 +20,9 @@ class UserController extends AbstractController
     #[Route('/', name: 'app_user_index', methods: ['GET'])]
     public function index(UserRepository $userRepository): Response
     {
-
-        if ($this->getUser()->getRoles()[0] == 'ROLE_ADMIN'){
+        if ($this->getUser()->getRoles()[0] == 'ROLE_ADMIN') {
             $all_related_users = $userRepository->findUserByRole('ROLE_USER'); // findByUserRole() = method prise de stack overflow : à réviser...
-        }else{
+        } else {
             $all_related_users = $userRepository->findBy(['conseiller' => $this->getUser()->getId()], ['conseiller' => 'ASC']); // Permet de récupérer tous les users aillant comme conseiller_id l'id de l'emp connecté
         }
         dump($all_related_users);
@@ -35,16 +34,11 @@ class UserController extends AbstractController
     #[Route('/new', name: 'app_user_new', methods: ['GET', 'POST'])]
     public function new(Request $request, UserRepository $userRepository, UserPasswordHasherInterface $userPasswordHasher): Response
     {
-
-
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
         $user->setConseiller($userRepository->findOneBy(['id' => 6]));
-
-
-        
         $user->setRoles(['ROLE_USER']);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -55,9 +49,6 @@ class UserController extends AbstractController
                 )
             );
             $userRepository->save($user, true);
-
-
-
 
             return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -79,7 +70,7 @@ class UserController extends AbstractController
     }
 
     #[Route('/emp/new', name: 'app_emp_new', methods: ['GET', 'POST'])]
-    public function newEmp(Request $request, UserRepository $userRepository,UserPasswordHasherInterface $userPasswordHasher): Response
+    public function newEmp(Request $request, UserRepository $userRepository, UserPasswordHasherInterface $userPasswordHasher): Response
     {
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
@@ -89,10 +80,10 @@ class UserController extends AbstractController
         $user->setMatricule(uniqid('EMP')); //uniqid est une fonction native PHP qui donne un serial alphanumérique en focntion de l'heure.
         // EMP va se rajouter devant
 
-
         if ($form->isSubmitted() && $form->isValid()) {
             $user->setPassword(
-                $userPasswordHasher->hashPassword( // method pour crypter le mdp
+                $userPasswordHasher->hashPassword(
+                    // method pour crypter le mdp
                     $user,
                     $form->get('password')->getData() // récupère la valeur du champs password 
                 )
@@ -118,8 +109,6 @@ class UserController extends AbstractController
         $role = $role[0];
         $achats = $user->getAchat();
 
-    
-
         return $this->render('user/show.html.twig', [
             'user' => $user,
             'role' => $role,
@@ -135,7 +124,8 @@ class UserController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $user->setPassword( // Pour encypter le mdp lorsque qu'on le modifie.
+            $user->setPassword(
+                // Pour encypter le mdp lorsque qu'on le modifie.
                 $userPasswordHasher->hashPassword(
                     $user,
                     $form->get('password')->getData()
@@ -161,7 +151,4 @@ class UserController extends AbstractController
 
         return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
     }
-
-
-
 }

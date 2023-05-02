@@ -4,27 +4,29 @@
 {% endblock %}
 
 {% block body %}
-<style>
-	.index-table{
-		margin-bottom : 2em;
-	}
-</style>
+	<style>
+		.index-table {
+			margin-bottom: 2em;
+		}
+	</style>
 
-	<table class="index-table">
-		<h2>
-			Nouveau
-		</h2>
-		<thead>
-			<tr>
-				<th>#</th>
-				<th>objet</th>
-				<th>Nom</th>
-				<th>Prenom</th>
-				<th>actions</th>
-			</tr>
-		</thead>
-		<tbody>
-			{% for messagerie in messageries|reverse|filter(messagerie => messagerie.statut == null) %}
+	{% if messageries | filter(messagerie => messagerie.statut == null) |length > 0 %}
+		<table class="index-table">
+			<h2>
+				Nouveau
+			</h2>
+			<thead>
+				<tr>
+					<th>#</th>
+					<th>objet</th>
+					<th>Nom</th>
+					<th>Prenom</th>
+					<th>Messages</th>
+					<th>actions</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for messagerie in messageries|reverse|filter(messagerie => messagerie.statut == null) %}
 					<tr>
 						<td>{{ messagerie.id }}
 						</td>
@@ -37,91 +39,106 @@
 							{{ messagerie.user[0].prenom }}
 						</td>
 						<td>
+							{{ messagerie.messages|length}}
+						</td>
+						<td>
 							<a href="{{ path('app_message_statut', {'id': messagerie.id , statut : 'done'}) }}">Archiver</a>
-
 						</td>
 					</tr>
-			{% else %}
-				<tr>
-					<td colspan="7">Aucune messagerie</td>
-				</tr>
-			{% endfor %}
-		</tbody>
-	</table>
-	<table class="index-table">
-		<h2>
-			En cours
-		</h2>
-		<thead>
-			<tr>
-				<th>#</th>
-				<th>objet</th>
-				<th>Nom</th>
-				<th>Prenom</th>
-				<th>actions</th>
-			</tr>
-		</thead>
-		<tbody>
-			{% for messagerie in messageries|reverse|filter(messagerie => messagerie.statut == 'ongoing') %}
-				<tr>
-					<td>{{ messagerie.id }}
-					</td>
-					<td>
-						<a href='{{path('app_message_show',{id : messagerie.id})}}'>{{ messagerie.objet }}</a>
-					</td>
-					<td>{{ messagerie.user[0].nom }}
-					</td>
-					<td>
-						{{ messagerie.user[0].prenom }}
-					</td>
-					<td>
-						<a href="{{ path('app_message_statut', {id: messagerie.id , statut : 'done' }) }}">Archiver</a>
-					</td>
-				</tr>
-			{% else %}
-				<tr>
-					<td colspan="7">Aucune messagerie</td>
-				</tr>
-			{% endfor %}
-		</tbody>
-	</table>
-	<table class="index-table">
-		<h2>
-			Archivé
-		</h2>
-		<thead>
-			<tr>
-				<th>#</th>
-				<th>objet</th>
-				<th>Nom</th>
-				<th>Prenom</th>
-				<th>actions</th>
-			</tr>
-		</thead>
-		<tbody>
-			{% for messagerie in messageries|reverse|filter(messagerie => messagerie.statut == 'done')  %}
-				<tr>
-					<td>{{ messagerie.id }}
-					</td>
-					<td>
-						<a href='{{path('app_message_show',{id : messagerie.id})}}'>{{ messagerie.objet }}</a>
-					</td>
-					<td>{{ messagerie.user[0].nom }}
-					</td>
-					<td>
-						{{ messagerie.user[0].prenom }}
-					</td>
-					<td>
-						<a href="{{ path('app_message_statut', {id: messagerie.id , statut : 'ongoing' }) }}">Désarchiver</a>
-					</td>
-				</tr>
-			{% else %}
-				<tr>
-					<td colspan="7">Aucune messagerie</td>
-				</tr>
-			{% endfor %}
+				{% else %}
+					<tr>
+						<td colspan="7">Aucune messagerie</td>
+					</tr>
+				{% endfor %}
+			{% endif %}
 		</tbody>
 	</table>
 
+	{% if messageries | filter(messagerie => messagerie.statut == 'ongoing') |length > 0 %}
+		<table class="index-table">
+			<h2>
+				En cours
+			</h2>
+			<thead>
+				<tr>
+					<th>#</th>
+					<th>objet</th>
+					<th>Nom</th>
+					<th>Prenom</th>
+					<th>Messages</th>
+					<th>actions</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for messagerie in messageries|reverse|filter(messagerie => messagerie.statut == 'ongoing') %}
+					<tr>
+						<td>{{ messagerie.id }}
+						</td>
+						<td>
+							<a href='{{path('app_message_show',{id : messagerie.id})}}'>{{ messagerie.objet }}</a>
+						</td>
+						<td>{{ messagerie.user[0].nom }}
+						</td>
+						<td>
+							{{ messagerie.user[0].prenom }}
+						</td>
+						<td>
+							{{ messagerie.messages|length }}
+						</td>
+						<td>
+							<a href="{{ path('app_message_statut', {id: messagerie.id , statut : 'done' }) }}">Archiver</a>
+						</td>
+					</tr>
+				{% else %}
+					<tr>
+						<td colspan="7">Aucune messagerie</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	{% endif %}
 
+	{% if messageries | filter(messagerie => messagerie.statut == 'done') |length > 0 %}
+		<table class="index-table">
+			<h2>
+				Archivé
+			</h2>
+			<thead>
+				<tr>
+					<th>#</th>
+					<th>objet</th>
+					<th>Nom</th>
+					<th>Prenom</th>
+					<th>Messages </th>
+					<th>actions</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for messagerie in messageries|reverse|filter(messagerie => messagerie.statut == 'done')  %}
+					<tr>
+						<td>{{ messagerie.id }}
+						</td>
+						<td>
+							<a href='{{path('app_message_show',{id : messagerie.id})}}'>{{ messagerie.objet }}</a>
+						</td>
+						<td>{{ messagerie.user[0].nom }}
+						</td>
+						<td>
+							{{ messagerie.user[0].prenom }}
+						</td>
+						<td>
+							{{ messagerie.messages|length }}
+						</td>
+						<td>
+							<a href="{{ path('app_message_statut', {id: messagerie.id , statut : 'ongoing' }) }}">Désarchiver</a>
+						</td>
+					</tr>
+				{% else %}
+					<tr>
+						<td colspan="7">Aucune messagerie</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	{% endif %}
 {% endblock %}

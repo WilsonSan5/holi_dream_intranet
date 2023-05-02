@@ -35,7 +35,7 @@ class MessageFixtures extends Fixture implements DependentFixtureInterface
                 'adminmdp'
             )
         );
-        $manager->persist($admin);
+
 
         // Création des comptes employés avec des utilisateurs associés
 
@@ -64,25 +64,27 @@ class MessageFixtures extends Fixture implements DependentFixtureInterface
                 $user->setPassword($this->userPasswordHasherInterface->hashPassword($user, 'usermdp'));
                 $user->setConseiller($emp);
 
-                for ($o = 0; $o < mt_rand(0,2); $o++) {
+                for ($o = 0; $o < mt_rand(0, 2); $o++) {
                     $messagerie = new Messagerie;
-                    $messagerie->setObjet($faker->sentence(mt_rand(3,10)));
+                    $messagerie->setObjet($faker->sentence(mt_rand(3, 10)));
                     $messagerie->addUser($user);
                     $messagerie->addUser($emp);
-                    for ($m = 0; $m < mt_rand(1,10); $m++) {
+                    for ($m = 0; $m < mt_rand(1, 10); $m++) {
                         $message = new Message;
-                        $message->setContenu($faker->sentence(mt_rand(1,10)));
+                        $message->setContenu($faker->sentence(mt_rand(1, 10)));
                         $message->setMessagerie($messagerie);
                         $message->setAuthor($messagerie->getUser()[mt_rand(0, 1)]); //à chaque création de message, 1 des 2 users en sera l'auteur.
                         $manager->persist($message);
                     }
                     $manager->persist($messagerie);
-                    
-                $manager->persist($user);
+
+                    $manager->persist($user);
+                }
+                $manager->persist($emp);
             }
-            $manager->persist($emp);
-            }
-        };
+            $manager->persist($admin);
+        }
+        ;
         $manager->flush();
     }
     public function getDependencies()
