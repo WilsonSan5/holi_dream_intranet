@@ -28,6 +28,7 @@ class ProduitType extends AbstractType
             ->add('description')
             ->add('prixDefaut')
             ->add('descriptionProgramme')
+            ->add('pays')
             ->add('image', FileType::class, [
                 'label' => 'Image (jpg,jpeg,webp)',
 

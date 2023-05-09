@@ -1,0 +1,28 @@
+form{
+    display:flex;
+    flex-direction: column;
+    align-items:start;
+}
+form label{
+    font-weight:bold;
+}
+form input, textarea{
+    margin-bottom:1em;
+    width:100%;
+}
+textarea{
+    height: 100px;
+}
+
+#produit_categorie input{
+    width:min-content;
+}
+#produit_categorie label{
+    width:min-content;
+    margin-right:2em;
+}
+
+form button{
+    border:1px solid black;
+    border-radius: 10px;
+}

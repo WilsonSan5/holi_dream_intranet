@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Planning;
 use App\Form\PlanningType;
 use App\Repository\PlanningRepository;
+use App\Repository\ProduitRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -24,21 +25,28 @@ class PlanningController extends AbstractController
     }
 
     #[Route('/new', name: 'app_planning_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, PlanningRepository $planningRepository): Response
+    public function new(Request $request, PlanningRepository $planningRepository,ProduitRepository $produitRepository): Response
     {
+        if(isset($_GET['id'])){
+            $produit_id = $_GET['id'];
+            $produit = $produitRepository->findOneBy(['id'=>$produit_id]);
+        }else $produit = $produitRepository->findOneBy(['id'=>1])
+        ;
         $planning = new Planning();
         $form = $this->createForm(PlanningType::class, $planning);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $interval = $planning->getDateDepart()->diff($planning->getDateFin());
+            $planning->setPrix($planning->getProduit()->getPrixDefaut() * $interval->format("%d"));
             $planningRepository->save($planning, true);
-
             return $this->redirectToRoute('app_planning_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('planning/new.html.twig', [
             'planning' => $planning,
             'form' => $form,
+            'produit' => $produit
         ]);
     }
 
@@ -53,6 +61,7 @@ class PlanningController extends AbstractController
     #[Route('/{id}/edit', name: 'app_planning_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Planning $planning, PlanningRepository $planningRepository): Response
     {
+
         $form = $this->createForm(PlanningType::class, $planning);
         $form->handleRequest($request);
 
@@ -65,6 +74,7 @@ class PlanningController extends AbstractController
         return $this->render('planning/edit.html.twig', [
             'planning' => $planning,
             'form' => $form,
+            'produit'=> $planning->getProduit()
         ]);
     }
 

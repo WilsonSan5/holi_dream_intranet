@@ -1,4 +1,15 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
+{{form_row(form.DateDepart)}}
+{{form_row(form.DateFin)}}
+<label name="{{ field_name(form.produit) }}">Produit</label>
+<select name="{{ field_name(form.produit) }}" class="form-control">
+    <option value="{{produit.id}}">{{produit.id}} - {{produit.pays}}</option>
+    {% for label, value in field_choices(form.produit) %}
+        <option value="{{ value }}">{{value}} - {{ label }}</option>
+    {% endfor %}
+</select>
+{{form_row(form.quantite)}}
     <button class="btn">{{ button_label|default('Save') }}</button>
 {{ form_end(form) }}
+
+<link rel='stylesheet' type='text/css' href='/css/form-style.css'>

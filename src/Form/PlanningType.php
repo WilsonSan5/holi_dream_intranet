@@ -23,11 +23,10 @@ class PlanningType extends AbstractType
             ->add('DateFin', DateType::class, [
                 'widget' => 'single_text'
             ])
-            ->add('prix')
             ->add('produit', EntityType::class, [
                 'class' => Produit::class,
                 'choice_label' => 'pays',
-                'placeholder' => 'titre'
+                
             ])
             ->add('quantite')
         ;
@@ -37,6 +36,7 @@ class PlanningType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Planning::class,
+            'preferred_produit' => false
         ]);
     }
 }
