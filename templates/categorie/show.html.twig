@@ -5,13 +5,13 @@
 
 {% block body %}
 	<style>
-		img {
+		.categorie-img {
 			width: 640px;
 			height: auto;
 		}
 	</style>
 	<h1>{{categorie.nom}}</h1>
-	<img src='{{categorie.image}}'>
+	<img src='{{categorie.image}}' class='categorie-img'>
 	<table class="table">
 		<tbody>
 			<tr>
