@@ -13,13 +13,11 @@ class CompteEditType extends AbstractType
     {
         $builder
             ->add('email')
-           
             ->add('password')
             ->add('nom')
             ->add('prenom')
         ;
     }
-
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([

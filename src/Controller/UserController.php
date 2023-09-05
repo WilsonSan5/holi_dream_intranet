@@ -30,7 +30,6 @@ class UserController extends AbstractController
             'users' => $all_related_users,
         ]);
     }
-
     #[Route('/new', name: 'app_user_new', methods: ['GET', 'POST'])]
     public function new(Request $request, UserRepository $userRepository, UserPasswordHasherInterface $userPasswordHasher): Response
     {
@@ -52,13 +51,11 @@ class UserController extends AbstractController
 
             return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
         }
-
         return $this->render('user/new.html.twig', [
             'user' => $user,
             'form' => $form,
         ]);
     }
-
     #[Route('/emp', name: 'app_emp_index', methods: ['GET'])]
     public function indexEmp(UserRepository $userRepository): Response
     {
@@ -68,7 +65,6 @@ class UserController extends AbstractController
             'users' => $all_emp,
         ]);
     }
-
     #[Route('/emp/new', name: 'app_emp_new', methods: ['GET', 'POST'])]
     public function newEmp(Request $request, UserRepository $userRepository, UserPasswordHasherInterface $userPasswordHasher): Response
     {
@@ -92,15 +88,11 @@ class UserController extends AbstractController
 
             return $this->redirectToRoute('app_emp_index', [], Response::HTTP_SEE_OTHER);
         }
-
         return $this->render('user/newEmp.html.twig', [
             'user' => $user,
             'form' => $form,
         ]);
     }
-
-
-
     #[Route('/{id}', name: 'app_user_show', methods: ['GET'])]
     public function show(User $user, UserRepository $userRepository): Response
     {
@@ -108,7 +100,6 @@ class UserController extends AbstractController
         $role = $user->getRoles();
         $role = $role[0];
         $achats = $user->getAchat();
-
         return $this->render('user/show.html.twig', [
             'user' => $user,
             'role' => $role,
@@ -116,13 +107,11 @@ class UserController extends AbstractController
             'all_related_users' => $all_related_users
         ]);
     }
-
     #[Route('/{id}/edit', name: 'app_user_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, User $user, UserRepository $userRepository, UserPasswordHasherInterface $userPasswordHasher): Response
     {
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $user->setPassword(
                 // Pour encypter le mdp lorsque qu'on le modifie.
@@ -132,23 +121,19 @@ class UserController extends AbstractController
                 )
             );
             $userRepository->save($user, true);
-
             return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
         }
-
         return $this->render('user/edit.html.twig', [
             'user' => $user,
             'form' => $form,
         ]);
     }
-
     #[Route('/{id}', name: 'app_user_delete', methods: ['POST'])]
     public function delete(Request $request, User $user, UserRepository $userRepository): Response
     {
         if ($this->isCsrfTokenValid('delete' . $user->getId(), $request->request->get('_token'))) {
             $userRepository->remove($user, true);
         }
-
         return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
     }
 }

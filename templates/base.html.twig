@@ -185,7 +185,7 @@
 				</li>
 				{% if is_granted('ROLE_ADMIN') %}
 					<li>
-						<a href="{{path('app_emp_index')}}" class="nav-link text-white {% if (app.request.pathInfo starts with 'path(app_emp_index') %} active {% endif %}">
+						<a href="{{path('app_emp_index')}}" class="nav-link text-white {% if (app.request.pathInfo ends with 'emp') %} active {% endif %}">
 
 							<svg class="bi me-2" width="16" height="16"><use xlink:href="#employe-ico"/></svg>
 							Employés
