@@ -24,4 +24,4 @@ jobs:
           "cd ventalis_intranet &&
           git pull -f &&
           php composer.phar install &&
-          php bin/console d:m:m -n"
+          "
