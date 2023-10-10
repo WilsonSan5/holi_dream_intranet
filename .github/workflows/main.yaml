@@ -1,20 +1,20 @@
 name: CD
 on:
   push:
-    branches: [prod]
+    branches: [ prod ]
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
-    env: 
-      SSHPASS: ${{ secrets.APP_PASS }}
     
-    steps:
-     - uses: actions/checkout@v2
+    env:
+      SSHPASS: ${{ secrets.APP_PASS }}
 
-     - name: APT UPDATE and INSTALL SSHPASS
-       run: 
+    steps:
+      - uses: actions/checkout@v2
+      
+      - name: APT UPDATE and INSTALL SSHPASS
+        run: 
           sudo apt update && sudo apt install sshpass
           
       - name: deploy
