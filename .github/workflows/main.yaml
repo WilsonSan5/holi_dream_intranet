@@ -9,6 +9,7 @@ jobs:
     
     env:
       SSHPASS: ${{ secrets.APP_PASS }}
+      node-version: 16
 
     steps:
       - uses: actions/checkout@v2
