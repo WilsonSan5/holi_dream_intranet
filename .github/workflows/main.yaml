@@ -22,6 +22,6 @@ jobs:
         run: 
           sshpass -e ssh -o stricthostkeychecking=no ${{ secrets.APP_USER }}@${{ secrets.APP_HOST }}
           "cd ventalis_intranet &&
-          git pull -f &&
+          git pull &&
           php composer.phar install &&
           "
