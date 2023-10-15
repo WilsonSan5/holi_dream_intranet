@@ -25,7 +25,7 @@ class UserController extends AbstractController
         } else {
             $all_related_users = $userRepository->findBy(['conseiller' => $this->getUser()->getId()], ['conseiller' => 'ASC']); // Permet de récupérer tous les users aillant comme conseiller_id l'id de l'emp connecté
         }
-        dump($all_related_users);
+        //dump($all_related_users);
         return $this->render('user/index.html.twig', [
             'users' => $all_related_users,
         ]);
@@ -60,7 +60,7 @@ class UserController extends AbstractController
     public function indexEmp(UserRepository $userRepository): Response
     {
         $all_emp = $userRepository->findUserByRole('ROLE_EMP');
-        dump($all_emp);
+        //dump($all_emp);
         return $this->render('user/employe.html.twig', [
             'users' => $all_emp,
         ]);
