@@ -10056,7 +10056,7 @@
                 "shasum": ""
             },
             "require": {
-                "php": ">=8.0",
+                "php": ">=8.1",
                 "symfony/dom-crawler": "^5.4|^6.0"
             },
             "require-dev": {
@@ -10124,7 +10124,7 @@
                 "shasum": ""
             },
             "require": {
-                "php": ">=8.0"
+                "php": ">=8.1"
             },
             "type": "library",
             "autoload": {
